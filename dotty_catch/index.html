@@ -2,18 +2,19 @@
 
 <body>
     <h1></h1>
-    <img src="dotty.svg" id="img1">
+    <img src='dotty.svg' id='img1'>
     <!-- <div></div> -->
     <script>
         const isRotate = true
-        const isSwitch = false
 
-        let isRun = false
+        let status = 'ゲーム前'
 
-        const body = document.querySelector("body");
-        const h1 = document.querySelector("h1");
-        const img = document.querySelector("#img1");
+        const body = document.querySelector('body');
+        const h1 = document.querySelector('h1');
+        const img = document.querySelector('#img1');
 
+        let time = 30
+        let mode = 2
         let currentClickCount = 0
         let maxClickCount = 0
 
@@ -29,16 +30,26 @@
         maxX = window.innerWidth / 1.25;
         maxY = window.innerHeight / 1.60;
 
+        const dl_name = {
+            1: '簡単',
+            2: '普通',
+            3: '難しい',
+        }
+
         drawStatus()
 
         function move() {
-            x += dx * 1.0;
-            y += dy * 1.0;
+            if (status != 'ゲーム中') {
+                return
+            }
 
+            x += dx * 1.0;
+            if (mode >= 2) {
+                y += dy * 1.0;
+            }
             if (isRotate) {
                 z += 2.5;
             }
-
             if (x < 0 || x > maxX) {
                 dx *= -1.0;
                 turn()
@@ -52,19 +63,49 @@
         }
 
         body.onmousedown = () => {
-            失敗()
+            if (status == 'ゲーム中') {
+                失敗()
+            }
         }
 
         img.onmousedown = () => {
-            if (isRun == false) {
+            if (status == 'ゲーム前') {
+                status = 'ゲーム中'
                 move()
-                isRun = true
+                let id = setInterval(() => {
+                    if (status == 'ゲーム中') {
+                        time -= 1
+                        if (time == 0) {
+                            status = 'ゲーム後'
+                            alert('終了です！')
+                        }
+                        drawStatus()
+                    }
+                }, 1000);
             }
-            成功()
+            if (status == 'ゲーム中') {
+                if (img.src.endsWith('/dotty.svg')) {
+                    成功()
+                } else {
+                    失敗()
+                }
+            }
             event.stopPropagation()
         }
 
         body.addEventListener('keydown', function (event) {
+            if (event.key == '1') {
+                mode = 1
+                drawStatus()
+            }
+            if (event.key == '2') {
+                mode = 2
+                drawStatus()
+            }
+            if (event.key == '3') {
+                mode = 3
+                drawStatus()
+            }
             if (event.key == 'Enter') {
                 成功()
             }
@@ -80,7 +121,7 @@
             dy = dy * speed
             currentClickCount += 1
             drawStatus()
-            body.style.backgroundColor = 'lime'
+            body.style.backgroundColor = '#d1ffa3' //  薄い緑
             window.setTimeout(function () {
                 body.style.backgroundColor = 'white'
             }, 250)
@@ -91,19 +132,18 @@
             dy = dy / speed
             currentClickCount -= 1
             drawStatus()
-            body.style.backgroundColor = 'red'
+            body.style.backgroundColor = 'ffa3a3' // 薄い赤
             window.setTimeout(function () {
                 body.style.backgroundColor = 'white'
             }, 250)
         }
 
         function turn() {
-            // z += 10;
-            if (isSwitch) {
-                if (img.src.endsWith("/logo.svg")) {
-                    img.src = "dotty.svg"
+            if (mode >= 3) {
+                if (img.src.endsWith('/logo.svg')) {
+                    img.src = 'dotty.svg'
                 } else {
-                    img.src = "logo.svg"
+                    img.src = 'logo.svg'
                 }
             }
         }
@@ -112,7 +152,7 @@
             if (currentClickCount >= maxClickCount) {
                 maxClickCount = currentClickCount
             }
-            h1.innerHTML = "ドッティーをつかまえろ！　現在: Lv." + currentClickCount + "　最高: Lv." + maxClickCount
+            h1.innerHTML = `ドッティーをつかまえろ！　現在: Lv.${currentClickCount}　最高: Lv.${maxClickCount}　時間: ${time}秒　ルール: ${dl_name[mode]}`;
         }
     </script>
     <style>
