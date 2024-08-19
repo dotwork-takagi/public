@@ -1,0 +1,141 @@
+<html>
+
+<body>
+    <h1></h1>
+    <img src="dotty.svg" id="img1">
+    <!-- <div></div> -->
+    <script>
+        const isRotate = true
+        const isSwitch = false
+
+        let isRun = false
+
+        const body = document.querySelector("body");
+        const h1 = document.querySelector("h1");
+        const img = document.querySelector("#img1");
+
+        let currentClickCount = 0
+        let maxClickCount = 0
+
+        let x = 0;
+        let y = 0;
+        let z = 0;
+        let dx = 5;
+        let dy = 5;
+
+        let maxX = null;
+        let maxY = null;
+
+        maxX = window.innerWidth / 1.25;
+        maxY = window.innerHeight / 1.60;
+
+        drawStatus()
+
+        function move() {
+            x += dx * 1.0;
+            y += dy * 1.0;
+
+            if (isRotate) {
+                z += 2.5;
+            }
+
+            if (x < 0 || x > maxX) {
+                dx *= -1.0;
+                turn()
+            }
+            if (y < 0 || y > maxY) {
+                dy *= -1.0;
+                turn()
+            }
+            img.style.transform = `translate(${x}px, ${y}px) rotate(${z}deg)`;
+            requestAnimationFrame(move);
+        }
+
+        body.onmousedown = () => {
+            失敗()
+        }
+
+        img.onmousedown = () => {
+            if (isRun == false) {
+                move()
+                isRun = true
+            }
+            成功()
+            event.stopPropagation()
+        }
+
+        body.addEventListener('keydown', function (event) {
+            if (event.key == 'Enter') {
+                成功()
+            }
+            if (event.key == 'Backspace') {
+                失敗()
+            }
+        })
+
+        const speed = 1.05
+
+        function 成功() {
+            dx = dx * speed
+            dy = dy * speed
+            currentClickCount += 1
+            drawStatus()
+            body.style.backgroundColor = 'lime'
+            window.setTimeout(function () {
+                body.style.backgroundColor = 'white'
+            }, 250)
+        }
+
+        function 失敗() {
+            dx = dx / speed
+            dy = dy / speed
+            currentClickCount -= 1
+            drawStatus()
+            body.style.backgroundColor = 'red'
+            window.setTimeout(function () {
+                body.style.backgroundColor = 'white'
+            }, 250)
+        }
+
+        function turn() {
+            // z += 10;
+            if (isSwitch) {
+                if (img.src.endsWith("/logo.svg")) {
+                    img.src = "dotty.svg"
+                } else {
+                    img.src = "logo.svg"
+                }
+            }
+        }
+
+        function drawStatus() {
+            if (currentClickCount >= maxClickCount) {
+                maxClickCount = currentClickCount
+            }
+            h1.innerHTML = "ドッティーをつかまえろ！　現在: Lv." + currentClickCount + "　最高: Lv." + maxClickCount
+        }
+    </script>
+    <style>
+        body {
+            cursor: url('bone.cur'), default;
+            user-select: none;
+            overflow: hidden;
+            /* position: fixed; */
+        }
+
+        div {
+            height: 50%;
+            width: 50%;
+            background-image: url(logo.svg);
+            background-repeat: no-repeat;
+        }
+
+        img {
+            -webkit-user-drag: none;
+            width: 20%;
+            height: 20%;
+        }
+    </style>
+</body>
+
+</html>
