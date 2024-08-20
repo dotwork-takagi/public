@@ -2,7 +2,7 @@
 
 <body>
     <h1></h1>
-    <img src='dotty.svg' id='img1'>
+    <img src='dotty.svg'>
     <!-- <div></div> -->
     <script>
         const isRotate = true
@@ -11,7 +11,7 @@
 
         const body = document.querySelector('body');
         const h1 = document.querySelector('h1');
-        const img = document.querySelector('#img1');
+        const img = document.querySelector('img');
 
         let time = 30
         let mode = 2
@@ -42,7 +42,6 @@
             if (status != 'ゲーム中') {
                 return
             }
-
             x += dx * 1.0;
             if (mode >= 2) {
                 y += dy * 1.0;
@@ -121,10 +120,7 @@
             dy = dy * speed
             currentClickCount += 1
             drawStatus()
-            body.style.backgroundColor = '#d1ffa3' //  薄い緑
-            window.setTimeout(function () {
-                body.style.backgroundColor = 'white'
-            }, 250)
+            SetBgcolorTimer('#d1ffa3') // 薄い緑
         }
 
         function 失敗() {
@@ -132,7 +128,11 @@
             dy = dy / speed
             currentClickCount -= 1
             drawStatus()
-            body.style.backgroundColor = 'ffa3a3' // 薄い赤
+            SetBgcolorTimer('#ffa3a3') // 薄い赤
+        }
+
+        function SetBgcolorTimer(color) {
+            body.style.backgroundColor = color
             window.setTimeout(function () {
                 body.style.backgroundColor = 'white'
             }, 250)
@@ -152,7 +152,11 @@
             if (currentClickCount >= maxClickCount) {
                 maxClickCount = currentClickCount
             }
-            h1.innerHTML = `ドッティーをつかまえろ！　現在: Lv.${currentClickCount}　最高: Lv.${maxClickCount}　時間: ${time}秒　ルール: ${dl_name[mode]}`;
+            h1.innerHTML = `ドッティーをつかまえろ！
+                            　現在: Lv.${currentClickCount}
+                            　最高: Lv.${maxClickCount}
+                            　時間: ${time}秒
+                            　ルール: ${dl_name[mode]}`;
         }
     </script>
     <style>
