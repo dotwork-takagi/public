@@ -51,23 +51,24 @@
         let maxX = gamebody.clientWidth - img.clientWidth
         let maxY = gamebody.clientHeight - img.clientHeight
 
-        let x = 0;
-        let y = 0;
-        let z = 0;
-        let dx = 5;
-        let dy = 5;
+        let x = 0
+        let y = 0
+        let z = 0
+        let dx = 5
+        let dy = 5
+        let dz = 2.5
 
         body.onmousedown = () => {
             if (time != 30 && time != 0) {
-                failure()
+                failure() // クリック失敗
             }
         }
 
         img.onmousedown = () => {
             if (time == 30) {
                 time = 29
-                move()
-                setInterval(() => {
+                move() // ドッティーを動かす
+                setInterval(() => { // 時間を動かす
                     if (time != 30 && time != 0) {
                         time -= 1
                         if (time == 0) {
@@ -75,56 +76,56 @@
                         }
                         drawGamepoint()
                     }
-                }, 1000);
+                }, 1000)
             }
             if (time != 30 && time != 0) {
-                success()
+                success() // クリック成功
             }
             event.stopPropagation()
         }
 
-        const acceleration = 1.05
+        function move() { // ドッティーを動かす処理
+            if (time != 30 && time != 0) {
+                x += dx
+                y += dy
+                z += dz
+                if (x < 0 || x > maxX) {
+                    dx *= -1
+                }
+                if (y < 0 || y > maxY) {
+                    dy *= -1
+                }
+                img.style.transform = `translate(${x}px, ${y}px) rotate(${z}deg)`
+                requestAnimationFrame(move)
+            }
+        }
 
-        function success() {
+        const acceleration = 1.05 // 加速
+
+        function success() { // クリック成功した時
             dx = dx * acceleration
             dy = dy * acceleration
             currentLevel += 1
             drawGamepoint()
-            SetBgcolorTimer('#d1ffa3') // 薄い緑
+            SetBgcolorTimer('#d1ffa3') // 背景色を薄い緑にする
         }
 
-        function failure() {
+        function failure() { // クリック失敗した時
             dx = dx / acceleration
             dy = dy / acceleration
             currentLevel -= 1
             drawGamepoint()
-            SetBgcolorTimer('#ffa3a3') // 薄い赤
+            SetBgcolorTimer('#ffa3a3') // 背景色を薄い赤にする
         }
 
-        function move() {
-            if (time != 30 && time != 0) {
-                x += dx * 1.0;
-                y += dy * 1.0;
-                z += 2.5;
-                if (x < 0 || x > maxX) {
-                    dx *= -1.0;
-                }
-                if (y < 0 || y > maxY) {
-                    dy *= -1.0;
-                }
-                img.style.transform = `translate(${x}px, ${y}px) rotate(${z}deg)`;
-                requestAnimationFrame(move);
-            }
-        }
-
-        function SetBgcolorTimer(color) {
+        function SetBgcolorTimer(color) { // 背景色を変える
             body.style.backgroundColor = color
             window.setTimeout(function () {
                 body.style.backgroundColor = 'white'
             }, 250)
         }
 
-        function drawGamepoint() {
+        function drawGamepoint() { // gamepointを描画する
             if (currentLevel >= maxLevel) {
                 maxLevel = currentLevel
             }
