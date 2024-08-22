@@ -1,22 +1,59 @@
 <html>
 
+<head>
+
+</head>
+
 <body>
-    <h1></h1>
-    <img src='dotty.svg'>
-    <!-- <div></div> -->
-    <script>
-        const isRotate = true
+    <h1>ドッティーをつかまえろ！</h1>
+    <span id="gamepoint">
+        <span id="current-level">現在: Lv.0</span>
+        <span id="max-level">最高: Lv.0</span>
+        <span id="time">時間: 30秒</span>
+    </span>
+    <div id='gamebody'>
+        <img src='dotty.svg'>
+    </div>
+</body>
 
-        let status = 'ゲーム前'
+<style>
+    body {
+        overflow: hidden;
+        user-select: none;
+        cursor: url('bone.cur'), default;
+    }
 
-        const body = document.querySelector('body');
-        const h1 = document.querySelector('h1');
-        const img = document.querySelector('img');
+    h1 {
+        display: inline-block;
+    }
 
-        let time = 30
-        let mode = 2
+    span {
+        padding-right: 1em;
+    }
+
+    img {
+        -webkit-user-drag: none;
+    }
+
+    #gamebody {
+        height: 80vh;
+    }
+</style>
+
+<script>
+
+    window.onload = function () {
+
         let currentClickCount = 0
         let maxClickCount = 0
+        let time = 30
+
+        const body = document.body
+        const gamebody = document.querySelector('#gamebody')
+        const img = document.querySelector('img')
+
+        let maxX = gamebody.clientWidth - img.clientWidth
+        let maxY = gamebody.clientHeight - img.clientHeight
 
         let x = 0;
         let y = 0;
@@ -24,111 +61,64 @@
         let dx = 5;
         let dy = 5;
 
-        let maxX = null;
-        let maxY = null;
-
-        maxX = window.innerWidth / 1.25;
-        maxY = window.innerHeight / 1.60;
-
-        const dl_name = {
-            1: '簡単',
-            2: '普通',
-            3: '難しい',
-        }
-
-        drawStatus()
-
-        function move() {
-            if (status != 'ゲーム中') {
-                return
-            }
-            x += dx * 1.0;
-            if (mode >= 2) {
-                y += dy * 1.0;
-            }
-            if (isRotate) {
-                z += 2.5;
-            }
-            if (x < 0 || x > maxX) {
-                dx *= -1.0;
-                turn()
-            }
-            if (y < 0 || y > maxY) {
-                dy *= -1.0;
-                turn()
-            }
-            img.style.transform = `translate(${x}px, ${y}px) rotate(${z}deg)`;
-            requestAnimationFrame(move);
-        }
-
         body.onmousedown = () => {
-            if (status == 'ゲーム中') {
-                失敗()
+            if (time != 30 && time != 0) {
+                failure()
             }
         }
 
         img.onmousedown = () => {
-            if (status == 'ゲーム前') {
-                status = 'ゲーム中'
+            if (time == 30) {
+                time = 29
                 move()
-                let id = setInterval(() => {
-                    if (status == 'ゲーム中') {
+                setInterval(() => {
+                    if (time != 30 && time != 0) {
                         time -= 1
                         if (time == 0) {
-                            status = 'ゲーム後'
                             alert('終了です！')
                         }
-                        drawStatus()
+                        drawGamepoint()
                     }
                 }, 1000);
             }
-            if (status == 'ゲーム中') {
-                if (img.src.endsWith('/dotty.svg')) {
-                    成功()
-                } else {
-                    失敗()
-                }
+            if (time != 30 && time != 0) {
+                success()
             }
             event.stopPropagation()
         }
 
-        body.addEventListener('keydown', function (event) {
-            if (event.key == '1') {
-                mode = 1
-                drawStatus()
-            }
-            if (event.key == '2') {
-                mode = 2
-                drawStatus()
-            }
-            if (event.key == '3') {
-                mode = 3
-                drawStatus()
-            }
-            if (event.key == 'Enter') {
-                成功()
-            }
-            if (event.key == 'Backspace') {
-                失敗()
-            }
-        })
+        const acceleration = 1.05
 
-        const speed = 1.05
-
-        function 成功() {
-            dx = dx * speed
-            dy = dy * speed
+        function success() {
+            dx = dx * acceleration
+            dy = dy * acceleration
             currentClickCount += 1
-            drawStatus()
+            drawGamepoint()
             SetBgcolorTimer('#d1ffa3') // 薄い緑
         }
 
-        function 失敗() {
-            dx = dx / speed
-            dy = dy / speed
+        function failure() {
+            dx = dx / acceleration
+            dy = dy / acceleration
             currentClickCount -= 1
-            drawStatus()
+            drawGamepoint()
             SetBgcolorTimer('#ffa3a3') // 薄い赤
+        }
+
+        function move() {
+            if (time != 30 && time != 0) {
+                x += dx * 1.0;
+                y += dy * 1.0;
+                z += 2.5;
+                if (x < 0 || x > maxX) {
+                    dx *= -1.0;
+                }
+                if (y < 0 || y > maxY) {
+                    dy *= -1.0;
+                }
+                img.style.transform = `translate(${x}px, ${y}px) rotate(${z}deg)`;
+                requestAnimationFrame(move);
+            }
         }
 
         function SetBgcolorTimer(color) {
@@ -138,48 +128,15 @@
             }, 250)
         }
 
-        function turn() {
-            if (mode >= 3) {
-                if (img.src.endsWith('/logo.svg')) {
-                    img.src = 'dotty.svg'
-                } else {
-                    img.src = 'logo.svg'
-                }
-            }
-        }
-
-        function drawStatus() {
+        function drawGamepoint() {
             if (currentClickCount >= maxClickCount) {
                 maxClickCount = currentClickCount
             }
-            h1.innerHTML = `ドッティーをつかまえろ！`
-                            + `　現在: Lv.${currentClickCount}`
-                            + `　最高: Lv.${maxClickCount}`
-                            + `　時間: ${time}秒`
-                            // + `　ルール: ${dl_name[mode]}`;
+            document.querySelector('#current-level').innerHTML = `現在: Lv.${currentClickCount}`
+            document.querySelector('#max-level').innerHTML = `最大: Lv.${maxClickCount}`
+            document.querySelector('#time').innerHTML = `時間: ${time}秒`
         }
-    </script>
-    <style>
-        body {
-            cursor: url('bone.cur'), default;
-            user-select: none;
-            overflow: hidden;
-            /* position: fixed; */
-        }
-
-        div {
-            height: 50%;
-            width: 50%;
-            background-image: url(logo.svg);
-            background-repeat: no-repeat;
-        }
-
-        img {
-            -webkit-user-drag: none;
-            width: 20%;
-            height: 20%;
-        }
-    </style>
-</body>
+    }
+</script>
 
 </html>

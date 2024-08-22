@@ -1,0 +1,185 @@
+<html>
+
+<body>
+    <h1></h1>
+    <img src='dotty.svg'>
+    <!-- <div></div> -->
+    <script>
+        const isRotate = true
+
+        let status = 'ゲーム前'
+
+        const body = document.querySelector('body');
+        const h1 = document.querySelector('h1');
+        const img = document.querySelector('img');
+
+        let time = 30
+        let mode = 2
+        let currentClickCount = 0
+        let maxClickCount = 0
+
+        let x = 0;
+        let y = 0;
+        let z = 0;
+        let dx = 5;
+        let dy = 5;
+
+        let maxX = null;
+        let maxY = null;
+
+        maxX = window.innerWidth / 1.25;
+        maxY = window.innerHeight / 1.60;
+
+        const dl_name = {
+            1: '簡単',
+            2: '普通',
+            3: '難しい',
+        }
+
+        drawStatus()
+
+        function move() {
+            if (status != 'ゲーム中') {
+                return
+            }
+            x += dx * 1.0;
+            if (mode >= 2) {
+                y += dy * 1.0;
+            }
+            if (isRotate) {
+                z += 2.5;
+            }
+            if (x < 0 || x > maxX) {
+                dx *= -1.0;
+                turn()
+            }
+            if (y < 0 || y > maxY) {
+                dy *= -1.0;
+                turn()
+            }
+            img.style.transform = `translate(${x}px, ${y}px) rotate(${z}deg)`;
+            requestAnimationFrame(move);
+        }
+
+        body.onmousedown = () => {
+            if (status == 'ゲーム中') {
+                失敗()
+            }
+        }
+
+        img.onmousedown = () => {
+            if (status == 'ゲーム前') {
+                status = 'ゲーム中'
+                move()
+                let id = setInterval(() => {
+                    if (status == 'ゲーム中') {
+                        time -= 1
+                        if (time == 0) {
+                            status = 'ゲーム後'
+                            alert('終了です！')
+                        }
+                        drawStatus()
+                    }
+                }, 1000);
+            }
+            if (status == 'ゲーム中') {
+                if (img.src.endsWith('/dotty.svg')) {
+                    成功()
+                } else {
+                    失敗()
+                }
+            }
+            event.stopPropagation()
+        }
+
+        body.addEventListener('keydown', function (event) {
+            if (event.key == '1') {
+                mode = 1
+                drawStatus()
+            }
+            if (event.key == '2') {
+                mode = 2
+                drawStatus()
+            }
+            if (event.key == '3') {
+                mode = 3
+                drawStatus()
+            }
+            if (event.key == 'Enter') {
+                成功()
+            }
+            if (event.key == 'Backspace') {
+                失敗()
+            }
+        })
+
+        const speed = 1.05
+
+        function 成功() {
+            dx = dx * speed
+            dy = dy * speed
+            currentClickCount += 1
+            drawStatus()
+            SetBgcolorTimer('#d1ffa3') // 薄い緑
+        }
+
+        function 失敗() {
+            dx = dx / speed
+            dy = dy / speed
+            currentClickCount -= 1
+            drawStatus()
+            SetBgcolorTimer('#ffa3a3') // 薄い赤
+        }
+
+        function SetBgcolorTimer(color) {
+            body.style.backgroundColor = color
+            window.setTimeout(function () {
+                body.style.backgroundColor = 'white'
+            }, 250)
+        }
+
+        function turn() {
+            if (mode >= 3) {
+                if (img.src.endsWith('/logo.svg')) {
+                    img.src = 'dotty.svg'
+                } else {
+                    img.src = 'logo.svg'
+                }
+            }
+        }
+
+        function drawStatus() {
+            if (currentClickCount >= maxClickCount) {
+                maxClickCount = currentClickCount
+            }
+            h1.innerHTML = `ドッティーをつかまえろ！`
+                            + `　現在: Lv.${currentClickCount}`
+                            + `　最高: Lv.${maxClickCount}`
+                            + `　時間: ${time}秒`
+                            // + `　ルール: ${dl_name[mode]}`;
+        }
+    </script>
+    <style>
+        body {
+            cursor: url('bone.cur'), default;
+            user-select: none;
+            overflow: hidden;
+            /* position: fixed; */
+        }
+
+        div {
+            height: 50%;
+            width: 50%;
+            background-image: url(logo.svg);
+            background-repeat: no-repeat;
+        }
+
+        img {
+            -webkit-user-drag: none;
+            width: 20%;
+            height: 20%;
+        }
+    </style>
+</body>
+
+</html>
