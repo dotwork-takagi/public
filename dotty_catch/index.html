@@ -1,9 +1,5 @@
 <html>
 
-<head>
-
-</head>
-
 <body>
     <h1>ドッティーをつかまえろ！</h1>
     <span id="gamepoint">
@@ -44,8 +40,8 @@
 
     window.onload = function () {
 
-        let currentClickCount = 0
-        let maxClickCount = 0
+        let currentLevel = 0
+        let maxLevel = 0
         let time = 30
 
         const body = document.body
@@ -92,7 +88,7 @@
         function success() {
             dx = dx * acceleration
             dy = dy * acceleration
-            currentClickCount += 1
+            currentLevel += 1
             drawGamepoint()
             SetBgcolorTimer('#d1ffa3') // 薄い緑
         }
@@ -100,7 +96,7 @@
         function failure() {
             dx = dx / acceleration
             dy = dy / acceleration
-            currentClickCount -= 1
+            currentLevel -= 1
             drawGamepoint()
             SetBgcolorTimer('#ffa3a3') // 薄い赤
         }
@@ -129,11 +125,11 @@
         }
 
         function drawGamepoint() {
-            if (currentClickCount >= maxClickCount) {
-                maxClickCount = currentClickCount
+            if (currentLevel >= maxLevel) {
+                maxLevel = currentLevel
             }
-            document.querySelector('#current-level').innerHTML = `現在: Lv.${currentClickCount}`
-            document.querySelector('#max-level').innerHTML = `最大: Lv.${maxClickCount}`
+            document.querySelector('#current-level').innerHTML = `現在: Lv.${currentLevel}`
+            document.querySelector('#max-level').innerHTML = `最大: Lv.${maxLevel}`
             document.querySelector('#time').innerHTML = `時間: ${time}秒`
         }
     }
