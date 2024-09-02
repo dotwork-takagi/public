@@ -5,7 +5,7 @@
 </head>
 
 <body>
-    <h1>バウンドするドッティーをつかまえろ！</h1>
+    <h1>ドッティーをつかまえろ！（バウンド）</h1>
     <span id="gamepoint">
         <span id="current-level">現在: Lv.0</span>
         <span id="max-level">最高: Lv.0</span>
@@ -46,7 +46,7 @@
 
         img.onmousedown = () => {
             if (time == 30) {
-                time = 29
+                time -= 1
                 move() // ドッティーを動かす
                 setInterval(() => { // 時間を動かす
                     if (time != 30 && time != 0) {
