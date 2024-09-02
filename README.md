@@ -1,3 +1,3 @@
 # Pages
 ## 作ったもの
-- [ドッティーを捕まえろ！](https://dotwork-takagi.github.io/public/dotty_catch/)
+- [バウンドドッティー](https://dotwork-takagi.github.io/public/dotty_games/bounce.html)
