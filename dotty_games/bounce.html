@@ -1,7 +1,11 @@
 <html>
 
+<head>
+    <link rel="stylesheet" href="main.css">
+</head>
+
 <body>
-    <h1>ドッティーをつかまえろ！</h1>
+    <h1>バウンドするドッティーをつかまえろ！</h1>
     <span id="gamepoint">
         <span id="current-level">現在: Lv.0</span>
         <span id="max-level">最高: Lv.0</span>
@@ -11,34 +15,6 @@
         <img src='dotty.svg'>
     </div>
 </body>
-
-<style>
-    body {
-        overflow: hidden;
-        user-select: none;
-        cursor: url('bone.cur'), default;
-    }
-
-    h1 {
-        display: inline-block;
-    }
-
-    img {
-        -webkit-user-drag: none;
-    }
-
-    #gamebody {
-        height: 80vh;
-    }
-
-    #gamepoint span {
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-        border: 4px dotted #0000ff;
-        position: relative;
-        top: -0.4em;
-    }
-</style>
 
 <script>
 
