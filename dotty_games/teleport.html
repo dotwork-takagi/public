@@ -1,17 +1,18 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="main.css">
+    <title>瞬間移動</title>
+    <link rel='stylesheet' href='css/main.css'>
 </head>
 
-<body>
-    <h1>ドッティーをつかまえろ！（瞬間移動）</h1>
-    <span id="gamepoint">
-        <span id="current-level"></span>
-        <span id="time"></span>
+<body class='bg'>
+    <h1>ドッティをつかまえろ！（瞬間移動）</h1>
+    <span id='gamepoint'>
+        <span id='count'></span>
+        <span id='time'></span>
     </span>
     <div id='gamebody'>
-        <img src='dotty.svg'>
+        <img src='img/dotty.svg'>
     </div>
 </body>
 
@@ -19,57 +20,61 @@
 
     window.onload = function () {
 
-        let clickCount = 0
-        let maxLevel = 0
-        let time = 10
+        let count = 0 // クリック回数
+        let time = 10 // 制限時間
 
         const body = document.body
         const gamebody = document.querySelector('#gamebody')
         const img = document.querySelector('img')
 
+        // 移動範囲の設定
         let maxX = gamebody.clientWidth - img.clientWidth
         let maxY = gamebody.clientHeight - img.clientHeight
 
-        let x = 0
-        let y = 0
+        //　初期位置の設定
+        let x = maxX / 2
+        let y = maxY / 2
+
+        img.style.transform = `translate(${x}px, ${y}px)`
 
         drawGamepoint()
 
         img.onmousedown = () => {
-            if (time == 10) {
+            if (time == 10) { // 開始前
                 time -= 1
-                setInterval(() => { // 時間を動かす
-                    if (time != 10 && time != 0) {
+                setInterval(() => { // 時間を制御する
+                    if (time != 0) { // プレイ中
                         time -= 1
-                        if (time == 0) {
+                        if (time == 0) { // タイムアップ
                             alert('終了です！')
                         }
                         drawGamepoint()
                     }
                 }, 1000)
+                img.style.opacity = 0
+                setInterval(() => { // 透明度を制御する
+                    img.style.opacity -= -0.01
+                }, 15)
             }
-            if (time != 10 && time != 0) {
-                success() // クリック成功
+            if (time != 0) {
+                count += 1
+                drawGamepoint()
                 x = getRandomInt(0, maxX)
                 y = getRandomInt(0, maxY)
                 img.style.transform = `translate(${x}px, ${y}px)`
+                img.style.opacity = 0
             }
         }
 
-        function success() { // クリック成功した時
-            clickCount += 1
-            drawGamepoint()
-        }
-
         function drawGamepoint() { // gamepointを描画する
-            document.querySelector('#current-level').innerHTML = `スコア: ${clickCount}回`
+            document.querySelector('#count').innerHTML = `スコア: ${count}回`
             document.querySelector('#time').innerHTML = `時間: ${time}秒`
         }
 
         function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min + 1)) + min;
+            min = Math.ceil(min)
+            max = Math.floor(max)
+            return Math.floor(Math.random() * (max - min + 1)) + min
         }
     }
 </script>

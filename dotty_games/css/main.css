@@ -1,0 +1,32 @@
+body {
+    overflow: hidden; /* はみ出した部分を隠す */
+    user-select: none; /* 選択禁止にする */
+    cursor: url('../img/cur/bone.cur'), default; /* カーソルを設定 */
+}
+
+.bg {
+    background-image: url('../img/bg/sougen.jpg'); /* 背景を設定 */
+    background-size: cover; /* 背景を画面全体に拡大 */
+    background-repeat: no-repeat; /* 背景の繰り返しを防ぐ */
+    background-position: center; /* 背景を中央に配置 */
+}
+
+h1 {
+    display: inline-block;
+}
+
+img {
+    -webkit-user-drag: none; /* ドラッグ禁止にする */
+}
+
+#gamebody {
+    height: 80vh;
+}
+
+#gamepoint span {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border: 3px solid #9C6500;
+    position: relative;
+    top: -0.4em;
+}

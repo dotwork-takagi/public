@@ -1,0 +1,63 @@
+<head>
+    <title>バウンド</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        input {
+            position: relative;
+            top: -15vh;
+            width:16em;
+        }
+        img {
+            height: 10vw;
+            width: 10vw;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ドッティとじゃんけん</h1>
+    <div>
+        <img src='img/dotty.svg'>
+        <input type="text" id="text" value="僕とじゃんけんで遊びましょう">
+        <br><br>
+        <div id="select">
+            <img id="gu" src="img/janken/gu.png">
+            <img id="choki" src="img/janken/choki.png">
+            <img id="pa" src="img/janken/pa.png">
+        </div>
+    </div>
+</body>
+
+<script>
+    let isPlaying = false
+
+    const text =  document.querySelector("#text")
+
+    const gu = document.querySelector("#gu")
+    const choki = document.querySelector("#choki")
+    const pa = document.querySelector("#pa")
+
+    gu.onclick = () => {
+        choki.style.display= "none"
+        pa.style.display= "none"
+        play("gu")
+    }
+
+    choki.onclick = () => {
+        gu.style.display= "none"
+        pa.style.display= "none"
+        play("choki")
+    }
+
+    pa.onclick = () => {
+        gu.style.display= "none"
+        choki.style.display= "none"
+        play("pa")
+    }
+
+    function play(player_te) {
+        const dotty_te = "グー"
+        const result = "勝ち"
+        text.value = `僕は${dotty_te}なので、僕の${result}です`
+    }
+</script>
