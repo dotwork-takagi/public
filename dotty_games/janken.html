@@ -1,12 +1,13 @@
 <head>
-    <title>バウンド</title>
+    <title>じゃんけん</title>
     <link rel="stylesheet" href="css/main.css">
     <style>
         input {
             position: relative;
             top: -15vh;
-            width:16em;
+            width: 20em;
         }
+
         img {
             height: 10vw;
             width: 10vw;
@@ -18,7 +19,7 @@
     <h1>ドッティとじゃんけん</h1>
     <div>
         <img src='img/dotty.svg'>
-        <input type="text" id="text" value="僕とじゃんけんで遊びましょう">
+        <input type="text" id="text" value="僕とじゃんけんで遊びましょう！">
         <br><br>
         <div id="select">
             <img id="gu" src="img/janken/gu.png">
@@ -31,33 +32,53 @@
 <script>
     let isPlaying = false
 
-    const text =  document.querySelector("#text")
+    const text = document.querySelector("#text")
 
     const gu = document.querySelector("#gu")
     const choki = document.querySelector("#choki")
     const pa = document.querySelector("#pa")
 
     gu.onclick = () => {
-        choki.style.display= "none"
-        pa.style.display= "none"
-        play("gu")
+        choki.style.display = "none"
+        pa.style.display = "none"
+        play("グー")
     }
 
     choki.onclick = () => {
-        gu.style.display= "none"
-        pa.style.display= "none"
-        play("choki")
+        gu.style.display = "none"
+        pa.style.display = "none"
+        play("チョキ")
     }
 
     pa.onclick = () => {
-        gu.style.display= "none"
-        choki.style.display= "none"
-        play("pa")
+        gu.style.display = "none"
+        choki.style.display = "none"
+        play("パー")
     }
 
-    function play(player_te) {
-        const dotty_te = "グー"
-        const result = "勝ち"
-        text.value = `僕は${dotty_te}なので、僕の${result}です`
+    function play(userChoice) {
+        const dottyChoice = getComputerChoice()
+        const result = determineWinner(userChoice, dottyChoice)
+        text.value = `僕は${dottyChoice}なので、${result}ですね！`
+    }
+
+    function getComputerChoice() {
+        const choices = ["グー", "チョキ", "パー"];
+        const randomIndex = Math.floor(Math.random() * choices.length);
+        return choices[randomIndex];
+    }
+
+    function determineWinner(userChoice, computerChoice) {
+        if (userChoice === computerChoice) {
+            return "引き分け";
+        }
+        if (
+            (userChoice === "グー" && computerChoice === "チョキ") ||
+            (userChoice === "チョキ" && computerChoice === "パー") ||
+            (userChoice === "パー" && computerChoice === "グー")
+        ) {
+            return "あなたの勝ち";
+        }
+        return "僕の勝ち";
     }
 </script>
