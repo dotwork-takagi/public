@@ -39,18 +39,24 @@
     const pa = document.querySelector("#pa")
 
     gu.onclick = () => {
+        if (isPlaying) { return }
+        isPlaying = true
         choki.style.display = "none"
         pa.style.display = "none"
         play("グー")
     }
 
     choki.onclick = () => {
+        if (isPlaying) { return }
+        isPlaying = true
         gu.style.display = "none"
         pa.style.display = "none"
         play("チョキ")
     }
 
     pa.onclick = () => {
+        if (isPlaying) { return }
+        isPlaying = true
         gu.style.display = "none"
         choki.style.display = "none"
         play("パー")
