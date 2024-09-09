@@ -4,13 +4,6 @@ body {
     cursor: url('../img/cur/bone.cur'), default; /* カーソルを設定 */
 }
 
-.bg {
-    background-image: url('../img/bg/sougen.jpg'); /* 背景を設定 */
-    background-size: cover; /* 背景を画面全体に拡大 */
-    background-repeat: no-repeat; /* 背景の繰り返しを防ぐ */
-    background-position: center; /* 背景を中央に配置 */
-}
-
 h1 {
     display: inline-block;
 }

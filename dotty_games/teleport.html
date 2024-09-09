@@ -3,6 +3,15 @@
 <head>
     <title>瞬間移動</title>
     <link rel='stylesheet' href='css/main.css'>
+    <style>
+        body {
+            background-image: url('img/bg/sougen.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+    <script src='js/main.js'></script>
 </head>
 
 <body class='bg'>
@@ -69,12 +78,6 @@
         function drawGamepoint() { // gamepointを描画する
             document.querySelector('#count').innerHTML = `スコア: ${count}回`
             document.querySelector('#time').innerHTML = `時間: ${time}秒`
-        }
-
-        function getRandomInt(min, max) {
-            min = Math.ceil(min)
-            max = Math.floor(max)
-            return Math.floor(Math.random() * (max - min + 1)) + min
         }
     }
 </script>

@@ -1,0 +1,155 @@
+<head>
+    <title>シューティング</title>
+    <link rel='stylesheet' href='css/main.css'>
+    <style>
+        body {
+            background-image: url('img/bg/aozora.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        #dotty_p1,
+        #dotty_p2 {
+            position: absolute;
+            height: 8em;
+            width: 8em;
+        }
+
+        #ball {
+            position: absolute;
+            height: 3em;
+            width: 3em;
+        }
+    </style>
+    <script src='js/AudioPlayer.js'></script>
+    <script src='js/main.js'></script>
+</head>
+
+<body>
+    <h1>ドッティとシューティング</h1>
+    <span id='gamepoint'>
+        <span id='count'></span>
+        <span id='time'></span>
+    </span>
+    <div id='gamebody'>
+        <img id='dotty_p1' src='img/dotty/blue.svg'>
+        <img id='dotty_p2' src='img/dotty/red.svg'>
+        <img id='ball' src='img/ball/red.png'>
+    </div>
+</body>
+
+<script>
+
+    const ap = AudioPlayer()
+    ap.load('shot', 'sound/shot.mp3')
+
+    window.onload = function () {
+
+        let count = 0 // ヒット回数
+        let time = 10 // 制限時間
+
+        let direction = 0
+
+        const body = document.body
+        const gamebody = document.querySelector('#gamebody')
+        const dotty_p1 = document.querySelector('#dotty_p1')
+        const dotty_p2 = document.querySelector('#dotty_p2')
+        const ball = document.querySelector('#ball')
+
+        let maxX = gamebody.clientWidth - dotty_p1.clientWidth
+        let maxY = gamebody.clientHeight - dotty_p1.clientHeight
+
+        let dotty_p1_x = maxX / 2
+        let dotty_p1_y = maxY
+        let dotty_p1_display = ''
+
+        let dotty_p2_x = maxX / 2
+        let dotty_p2_y = 0
+        let dotty_p2_display = ''
+
+        let ball_x = 0
+        let ball_y = 0
+        let ball_display = 'none'
+
+        drawObject()
+        drawGamepoint()
+
+        body.onkeydown = (e) => {
+            if (e.key == 'ArrowLeft') {
+                direction = -1
+            }
+            if (e.key == 'ArrowRight') {
+                direction = 1
+            }
+            if (e.code == 'Space') {
+                ball_x = dotty_p1_x + dotty_p1.clientWidth / 2 - ball.clientWidth / 2
+                ball_y = dotty_p1_y
+                ball_display = ''
+                drawObject()
+            }
+        }
+
+        body.onkeyup = (e) => {
+            direction = 0
+        }
+
+        setInterval(() => {
+            dotty_p1_x += 5 * direction
+            ball_y -= 10
+            drawObject()
+            checkHit()
+        }, 10)
+
+        function drawObject() {
+            dotty_p1.style.transform = `translate(${dotty_p1_x}px, ${dotty_p1_y}px)`
+            dotty_p1.style.display = dotty_p1_display
+            dotty_p2.style.transform = `translate(${dotty_p2_x}px, ${dotty_p2_y}px)`
+            dotty_p2.style.display = dotty_p2_display
+            ball.style.transform = `translate(${ball_x}px, ${ball_y}px)`
+            ball.style.display = ball_display
+        }
+
+        function drawGamepoint() { // gamepointを描画する
+            document.querySelector('#count').innerHTML = `スコア: ${count}回`
+            document.querySelector('#time').innerHTML = `時間: ${time}秒`
+        }
+
+        function checkHit() {
+            let isHit = false
+            if (
+                ball_x > dotty_p2_x && ball_x < dotty_p2_x + dotty_p2.width &&
+                ball_y > dotty_p2_y && ball_y < dotty_p2_y + dotty_p2.height
+            ) {
+                isHit = true
+            }
+            if (isHit && ball_display == '') {
+                if (time == 10) { // 開始前
+                    time -= 1
+                    setInterval(() => { // 時間を制御する
+                        if (time != 0) { // プレイ中
+                            time -= 1
+                            if (time == 0) { // タイムアップ
+                                alert('終了です！')
+                            }
+                            drawGamepoint()
+                        }
+                    }, 1000)
+                    dotty_p2.style.opacity = 0
+                    setInterval(() => { // 透明度を制御する
+                        dotty_p2.style.opacity -= -0.01
+                    }, 15)
+                }
+                if (time != 0) {
+                    ap.play('shot')
+                    count++
+                    dotty_p2_x = getRandomInt(0, maxX)
+                    ball_display = 'none'
+                    dotty_p2.style.opacity = 0
+                    drawObject()
+                    drawGamepoint()
+                }
+            }
+        }
+    }
+</script>
