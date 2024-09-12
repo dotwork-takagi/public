@@ -17,14 +17,11 @@ function AudioPlayer() {
     obj.play = function (id) {
         const ctxList = this.ctxList
         ctxList[id] = ctxList[id] ?? {}
-        if (ctxList[id].buffer != null && ctxList[id].source == null) {
-            ctxList[id].source = ctxList[id].audioCtx.createBufferSource()
-            ctxList[id].source.buffer = ctxList[id].buffer
-            ctxList[id].source.connect(ctxList[id].audioCtx.destination)
-            ctxList[id].source.onended = () => {
-                ctxList[id].source = null
-            }
-            ctxList[id].source.start()
+        if (ctxList[id].buffer != null) {
+            const source = ctxList[id].audioCtx.createBufferSource()
+            source.buffer = ctxList[id].buffer
+            source.connect(ctxList[id].audioCtx.destination)
+            source.start()
         }
     }
     return obj
