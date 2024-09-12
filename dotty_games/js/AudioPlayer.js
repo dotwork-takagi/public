@@ -21,6 +21,8 @@ function AudioPlayer() {
             const source = ctxList[id].audioCtx.createBufferSource()
             source.buffer = ctxList[id].buffer
             source.connect(ctxList[id].audioCtx.destination)
+            source.onended = () => {
+            }
             source.start()
         }
     }
