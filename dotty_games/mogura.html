@@ -1,0 +1,115 @@
+<html>
+
+</html>
+
+<head>
+    <title>もぐらたたき</title>
+    <link rel='stylesheet' href='css/main.css'>
+    <style>
+        body {
+            /* background-image: url('img/bg/sougen.jpg'); */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            /* margin: auto; */
+        }
+
+        td {
+            border: 3px solid #9C6500;
+            height: 10em;
+            width: 10em;
+        }
+
+        .dotty {
+            background-image: url('img/dotty/blue.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+    <script src='js/Dollar.js'></script>
+    <script src='js/main.js'></script>
+</head>
+
+<body class='bg'>
+    <h1>ドッティともぐらたたき</h1>
+    <span id='gamepoint'>
+        <span id='count'></span>
+        <span id='time'></span>
+    </span>
+    <table border="1">
+        <tr>
+            <td id='td7'></td>
+            <td id='td8'></td>
+            <td id='td9'></td>
+        </tr>
+        <tr>
+            <td id='td4'></td>
+            <td id='td5'></td>
+            <td id='td6'></td>
+        </tr>
+        <tr>
+            <td id='td1'></td>
+            <td id='td2'></td>
+            <td id='td3'></td>
+        </tr>
+    </table>
+</body>
+
+<script>
+
+    const ap = AudioPlayer()
+    ap.load('o', 'sound/o.mp3')
+    ap.load('x', 'sound/x.mp3')
+
+    window.onload = function () {
+
+        let count = 0 // クリック回数
+        let time = 10 // 制限時間
+
+        $('#td5').className = 'dotty'
+        drawGamepoint()
+
+        document.body.onkeydown = (e) => {
+            if (time == 10) { // 開始前
+                time -= 1
+                setInterval(() => { // 時間を制御する
+                    if (time != 0) { // ゲーム中
+                        time -= 1
+                        if (time == 0) { // タイムアップ
+                            alert('終了です！')
+                        }
+                        drawGamepoint()
+                    }
+                }, 1000)
+            }
+            if (time != 0) { // ゲーム中
+                let num = $('.dotty').id.replace('td', '')
+                if (e.key == num) {
+                    while (e.key == num) {
+                        num = getRandomInt(1, 9)
+                    }
+                    $('.dotty').className = ''
+                    $('#td' + num).className = 'dotty'
+                    count++
+                    ap.play('o')
+                } else {
+                    count--
+                    ap.play('x')
+                }
+                drawGamepoint()
+            }
+        }
+
+        function drawGamepoint() { // gamepointを描画する
+            $('#count').innerHTML = `スコア: ${count}回`
+            $('#time').innerHTML = `時間: ${time}秒`
+        }
+    }
+</script>
+
+</html>

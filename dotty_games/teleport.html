@@ -52,7 +52,7 @@
             if (time == 10) { // 開始前
                 time -= 1
                 setInterval(() => { // 時間を制御する
-                    if (time != 0) { // プレイ中
+                    if (time != 0) { // ゲーム中
                         time -= 1
                         if (time == 0) { // タイムアップ
                             alert('終了です！')
@@ -65,7 +65,7 @@
                     img.style.opacity -= -0.01
                 }, 15)
             }
-            if (time != 0) {
+            if (time != 0) { // ゲーム中
                 count += 1
                 drawGamepoint()
                 x = getRandomInt(0, maxX)
