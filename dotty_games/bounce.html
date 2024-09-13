@@ -3,14 +3,13 @@
 <head>
     <title>バウンド</title>
     <link rel="stylesheet" href="css/main.css">
+    <script src='js/main.js'></script>
 </head>
 
 <body>
-    <h1>ドッティをつかまえろ！（バウンド）</h1>
+    <h1>バウンド</h1>
     <span id="gamepoint">
-        <span id="current-level">現在: Lv.0</span>
-        <span id="max-level">最高: Lv.0</span>
-        <span id="time">時間: 30秒</span>
+        <span id="current-level"></span>
     </span>
     <div id='gamebody'>
         <img src='img/dotty/default.svg'>
@@ -22,8 +21,7 @@
     window.onload = function () {
 
         let currentLevel = 0
-        let maxLevel = 0
-        let time = 30
+        let isPlaying = null
 
         const body = document.body
         const gamebody = document.querySelector('#gamebody')
@@ -39,34 +37,29 @@
         let dy = 5
         let dz = 2.5
 
+        drawGamepoint()
+
         body.onmousedown = () => {
-            if (time != 30 && time != 0) {
-                failure() // クリック失敗
+            if (isPlaying) {
+                isPlaying = false
+                alert('ミスしたのでゲーム終了です！')
+                // SetBgcolor('#ffa3a3') // 背景色を薄い赤にする
             }
         }
 
         img.onmousedown = () => {
-            if (time == 30) {
-                time -= 1
-                move() // ドッティーを動かす
-                setInterval(() => { // 時間を動かす
-                    if (time != 30 && time != 0) {
-                        time -= 1
-                        if (time == 0) {
-                            alert('終了です！')
-                        }
-                        drawGamepoint()
-                    }
-                }, 1000)
+            if (isPlaying == null) {
+                isPlaying = true
+                move()
             }
-            if (time != 30 && time != 0) {
+            if (isPlaying) {
                 success() // クリック成功
             }
             event.stopPropagation()
         }
 
         function move() { // ドッティーを動かす処理
-            if (time != 30 && time != 0) {
+            if (isPlaying) {
                 x += dx
                 y += dy
                 z += dz
@@ -81,9 +74,8 @@
             }
         }
 
-        const acceleration = 1.05 // 加速
-
         function success() { // クリック成功した時
+            const acceleration = 1.05 // 加速
             dx = dx * acceleration
             dy = dy * acceleration
             currentLevel += 1
@@ -91,28 +83,8 @@
             SetBgcolorTimer('#d1ffa3') // 背景色を薄い緑にする
         }
 
-        function failure() { // クリック失敗した時
-            dx = dx / acceleration
-            dy = dy / acceleration
-            currentLevel -= 1
-            drawGamepoint()
-            SetBgcolorTimer('#ffa3a3') // 背景色を薄い赤にする
-        }
-
-        function SetBgcolorTimer(color) { // 背景色を変える
-            body.style.backgroundColor = color
-            window.setTimeout(function () {
-                body.style.backgroundColor = 'white'
-            }, 250)
-        }
-
         function drawGamepoint() { // gamepointを描画する
-            if (currentLevel >= maxLevel) {
-                maxLevel = currentLevel
-            }
-            document.querySelector('#current-level').innerHTML = `現在: Lv.${currentLevel}`
-            document.querySelector('#max-level').innerHTML = `最大: Lv.${maxLevel}`
-            document.querySelector('#time').innerHTML = `時間: ${time}秒`
+            document.querySelector('#current-level').innerHTML = `スコア: ${currentLevel}回`
         }
     }
 </script>

@@ -1,7 +1,7 @@
 body {
     overflow: hidden; /* はみ出した部分を隠す */
     user-select: none; /* 選択禁止にする */
-    cursor: url('../img/cur/bone.cur'), default; /* カーソルを設定 */
+    /* cursor: url('../img/cur/bone.cur'), default; */
 }
 
 h1 {

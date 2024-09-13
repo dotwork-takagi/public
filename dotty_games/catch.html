@@ -1,0 +1,104 @@
+<html></html>
+
+<head>
+    <title>キャッチ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src='js/Dollar.js'></script>
+    <script src='js/main.js'></script>
+    <style>
+        html {
+            cursor: none; 
+        }
+        img {
+            position: absolute;
+        }
+
+        #apple {
+            height: 3em;
+            width: 3em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>キャッチ</h1>
+    <span id="gamepoint">
+        <span id="count"></span>
+    </span>
+    <div id='gamebody'>
+        <img id='dotty' src='img/dotty/default.svg'>
+        <img id='apple' src='img/ringo.png'>
+    </div>
+</body>
+
+<script>
+
+    window.onload = function () {
+
+        let isPlaying = null
+
+        const dotty = $('#dotty')
+        const apple = $('#apple')
+
+        dotty.style.display = 'none'
+
+        let maxX = gamebody.clientWidth - apple.clientWidth
+        let maxY = gamebody.clientHeight - apple.clientHeight
+
+        let dotty_x = 0
+        let dotty_y = 0
+
+        let apple_x = maxX / 2
+        let apple_y = -200
+
+
+        let count = 0
+        let speed = 4
+
+        document.body.onmousemove = (e) => {
+            dotty_display = ''
+            dotty.style.display = dotty_display
+            dotty_x = e.clientX - dotty.width / 2
+            dotty_y = 480
+            dotty.style.transform = `translate(${dotty_x}px, ${dotty_y}px)`
+        }
+
+        document.body.onclick = () => {
+            isPlaying = true
+        }
+
+        drawGamepoint()
+
+        setInterval(() => {
+            if(isPlaying) {
+                apple_y += speed
+            }
+            apple.style.transform = `translate(${apple_x}px, ${apple_y}px)`  
+            checkHit() 
+        }, 10)
+
+        function drawGamepoint() { // gamepointを描画する
+            document.querySelector('#count').innerHTML = `スコア: ${count}回`
+        }
+
+        function checkHit() {
+            console.log('checkhit')
+            let isHit = false
+            if (
+                apple_x > dotty_x && apple_x < dotty_x + dotty.width &&
+                apple_y > dotty_y && apple_y < dotty_y + dotty.height
+            ) {
+                isHit = true
+            }
+            if (isHit) {
+                count++
+                speed += 0.5
+                apple_y = -200
+                apple_x = getRandomInt(0, maxX)
+                drawGamepoint()
+            }
+        }
+    }
+</script>
+
+</html>
