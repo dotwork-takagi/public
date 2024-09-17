@@ -75,7 +75,18 @@
         $('#td5').className = 'dotty'
         drawGamepoint()
 
+        for(const elem of $$('td')) {
+            elem.onclick = () => {
+                keydown_or_click(elem.id.replace('td', ''))
+            }
+        }
+
         document.body.onkeydown = (e) => {
+            keydown_or_click(e.key)
+        }
+
+        function keydown_or_click(new_num) {
+            let old_num = $('.dotty').id.replace('td', '')
             if (time == 10) { // 開始前
                 time -= 1
                 setInterval(() => { // 時間を制御する
@@ -89,13 +100,12 @@
                 }, 1000)
             }
             if (time != 0) { // ゲーム中
-                let num = $('.dotty').id.replace('td', '')
-                if (e.key == num) {
-                    while (e.key == num) {
-                        num = getRandomInt(1, 9)
+                if (new_num == old_num) {
+                    while (new_num == old_num) {
+                        new_num = getRandomInt(1, 9)
                     }
                     $('.dotty').className = ''
-                    $('#td' + num).className = 'dotty'
+                    $('#td' + new_num).className = 'dotty'
                     count++
                     ap.play('o')
                 } else {
