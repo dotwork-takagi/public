@@ -20,7 +20,7 @@
             display: none;
         }
 
-        #apple {
+        #fruit {
             height: 3em;
             width: 3em;
         }
@@ -34,7 +34,7 @@
     </span>
     <div id='gamebody'>
         <img id='dotty' src='img/dotty/default.svg'>
-        <img id='apple' src='img/ringo.png'>
+        <img id='fruit' src='img/fruit/apple.png'>
     </div>
 </body>
 
@@ -49,16 +49,16 @@
         let speed = 4
 
         const dotty = $('#dotty')
-        const apple = $('#apple')
+        const fruit = $('#fruit')
 
-        let maxX = gamebody.clientWidth - apple.clientWidth
-        let maxY = gamebody.clientHeight - apple.clientHeight
+        let maxX = gamebody.clientWidth - fruit.clientWidth
+        let maxY = gamebody.clientHeight - fruit.clientHeight
 
         let dottyX = 0
         let dottyY = 0
 
-        let appleX = maxX / 2
-        let appleY = -200
+        let fruitX = maxX / 2
+        let fruitY = -200
 
         document.body.onmousedown = () => { // ゲームを開始する
             isPlaying = true
@@ -73,9 +73,9 @@
 
         setInterval(() => { // リンゴを描画する
             if (isPlaying) {
-                appleY += speed
-                apple.style.transform = `translate(${appleX}px, ${appleY}px)`
-                apple.style.display = 'block'
+                fruitY += speed
+                fruit.style.transform = `translate(${fruitX}px, ${fruitY}px)`
+                fruit.style.display = 'block'
                 checkHit() // 当たり判定を行う
             }
         }, 10)
@@ -88,13 +88,28 @@
 
         function checkHit() {
             if (
-                appleX > dottyX && appleX < dottyX + dotty.width &&
-                appleY > dottyY && appleY < dottyY + dotty.height
+                fruitX > dottyX && fruitX < dottyX + dotty.width &&
+                fruitY > dottyY && fruitY < dottyY + dotty.height
             ) {
                 count++
-                speed += 0.25
-                appleY = -200
-                appleX = getRandomInt(0, maxX)
+                speed += 0.2
+                fruitY = -200
+                fruitX = getRandomInt(0, maxX)
+
+                if (count < 10) {
+                    fruit.src = 'img/fruit/apple.png'
+                } else if (count < 20) {
+                    fruit.src = 'img/fruit/banana.png'
+                } else if (count < 30) {
+                    fruit.src = 'img/fruit/orange.png'
+                } else if (count < 40) {
+                    fruit.src = 'img/fruit/peach.png'
+                } else if (count < 50) {
+                    fruit.src = 'img/fruit/melon.png'
+                } else {
+                    fruit.src = 'img/fruit/suika.png'
+                }
+
                 drawGamepoint()
             }
         }
