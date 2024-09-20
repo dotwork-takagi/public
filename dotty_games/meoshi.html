@@ -1,0 +1,93 @@
+<html>
+
+</html>
+
+<head>
+    <title>目押し</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src='js/Dollar.js'></script>
+    <script src='js/main.js'></script>
+    <style>
+        img {
+            position: absolute;
+        }
+
+        #dotty {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            height: auto;
+
+            height: 10em;
+            width: 10em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ドッティをクリックしよう！</h1>
+    <span id="gamepoint">
+        <span id="count"></span>
+    </span>
+    <div id='gamebody'>
+        <img id='dotty' src='img/dotty/blue.svg'>
+    </div>
+</body>
+
+<script>
+
+    window.onload = function () {
+
+        const dotty = $('#dotty')
+
+        let count, isPlaying, delay
+
+        init() // 初期化
+        setTimeout(timeout, delay)
+
+        dotty.onmousedown = () => {
+            if (isPlaying) {
+                if(dotty.src.endsWith('/blue.svg')) {
+                    count++
+                    delay *= 0.95
+                    drawGamepoint()
+                } else {
+                    isPlaying = false
+                    alert('失敗したのでゲーム終了です')
+                }
+            }
+        }
+
+        document.body.onkeydown = (e) => {
+            if (e.key == 'Escape') {
+                init()
+            }
+        }
+
+        function init() {
+            count = 0
+            isPlaying = true
+            delay = 500
+            drawGamepoint()
+        }
+
+        function timeout() {
+            if (isPlaying) {
+                if (dotty.src.endsWith('/blue.svg')) {
+                    dotty.src = 'others/logo.svg'
+                } else {
+                    dotty.src = 'img/dotty/blue.svg'
+                }
+            }
+            setTimeout(timeout, delay)
+        }
+
+        function drawGamepoint() {
+            document.querySelector('#count').innerHTML = `スコア: ${count}回`
+        }
+    }
+</script>
+
+</html>
