@@ -43,10 +43,11 @@
     window.onload = function () {
 
         let isPlaying = null
-        let isMousePress = false
 
-        let count = 0
-        let speed = 4
+        let count = null
+        let speed = null
+
+        const body = document.body
 
         const dotty = $('#dotty')
         const fruit = $('#fruit')
@@ -57,18 +58,24 @@
         let dottyX = 0
         let dottyY = 0
 
-        let fruitX = maxX / 2
-        let fruitY = -200
+        let fruitX = null
+        let fruitY = null
 
-        document.body.onmousedown = () => { // ゲームを開始する
+        body.onmousedown = () => { // ゲームを開始する
             isPlaying = true
         }
 
-        document.body.onmousemove = (e) => { // ドッティーを描画する
+        body.onmousemove = (e) => { // ドッティーを描画する
             dottyX = e.clientX - dotty.width / 2
             dottyY = 480
             dotty.style.transform = `translate(${dottyX}px, ${dottyY}px)`
             dotty.style.display = 'block'
+        }
+
+        body.onkeydown = (e) => {
+            if (e.key == 'Escape') {
+                init()
+            }
         }
 
         setInterval(() => { // リンゴを描画する
@@ -77,24 +84,6 @@
                 fruit.style.transform = `translate(${fruitX}px, ${fruitY}px)`
                 fruit.style.display = 'block'
                 checkHit() // 当たり判定を行う
-            }
-        }, 10)
-
-        drawGamepoint() // gamepointを描画する
-
-        function drawGamepoint() {
-            document.querySelector('#count').innerHTML = `スコア: ${count}回`
-        }
-
-        function checkHit() {
-            if (
-                fruitX > dottyX && fruitX < dottyX + dotty.width &&
-                fruitY > dottyY && fruitY < dottyY + dotty.height
-            ) {
-                count++
-                speed += 0.2
-                fruitY = -200
-                fruitX = getRandomInt(0, maxX)
 
                 if (count < 10) {
                     fruit.src = 'img/fruit/apple.png'
@@ -109,9 +98,35 @@
                 } else {
                     fruit.src = 'img/fruit/suika.png'
                 }
+            }
+        }, 10)
+
+        init() // 初期化
+
+        function init() {
+            fruitX = maxX / 2
+            fruitY = -200
+            count = 0
+            speed = 4
+            drawGamepoint()
+        }
+
+        function checkHit() {
+            if (
+                fruitX > dottyX && fruitX < dottyX + dotty.width &&
+                fruitY > dottyY && fruitY < dottyY + dotty.height
+            ) {
+                fruitX = getRandomInt(0, maxX)
+                fruitY = -200
+                count++
+                speed += 0.2
 
                 drawGamepoint()
             }
+        }
+
+        function drawGamepoint() {
+            document.querySelector('#count').innerHTML = `スコア: ${count}回`
         }
     }
 </script>
