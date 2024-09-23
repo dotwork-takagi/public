@@ -1,0 +1,143 @@
+<html>
+
+</html>
+
+</html>
+
+<head>
+    <title>ジャンプ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src='js/Dollar.js'></script>
+    <script src='js/main.js'></script>
+    <style>
+        body {
+            /* background-image: url('img/bg/sougen.jpg'); */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        img {
+            position: absolute;
+            display: none;
+        }
+
+        #ball {
+            height: 3em;
+            width: 3em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ボールをジャンプでかわそう！</h1>
+    <span id="gamepoint">
+        <span id="count"></span>
+    </span>
+    <div id='gamebody'>
+        <img id='dotty' src='img/dotty/default.svg'>
+        <img id='ball' src='img/ball/red.png'>
+    </div>
+</body>
+
+<script>
+
+    window.onload = function () {
+
+        let isPlaying, count, speed, jump, dottyDirection, ballDirection
+
+        const body = document.body
+
+        const dotty = $('#dotty')
+        const ball = $('#ball')
+
+        let maxX = gamebody.clientWidth - ball.clientWidth
+        let maxY = gamebody.clientHeight - ball.clientHeight
+
+        let dottyX, dottyY, ballX, ballY
+
+        body.onmousedown = () => { // ゲームを開始する
+            if (isPlaying && jump && dottyDirection == 0) {
+                dottyDirection = 1
+                jump = false
+                setTimeout(() => {
+                    dottyDirection = -1
+                }, 250)
+                setTimeout(() => {
+                    dottyDirection = 0
+                    dottyY = 450
+                }, 500)
+            }
+            if (isPlaying == null) {
+                isPlaying = true
+
+            }
+        }
+
+        body.onkeydown = (e) => {
+            if (e.key == 'Escape') {
+                init()
+            }
+        }
+
+        init() // 初期化
+
+
+        setInterval(() => { // リンゴを描画する
+            dotty.style.transform = `translate(${dottyX}px, ${dottyY}px)`
+            if (isPlaying) {
+                dottyY -= dottyDirection * 2
+                ballX -= speed * ballDirection
+                ball.style.transform = `translate(${ballX}px, ${ballY}px)`
+                ball.style.display = 'block'
+                checkHit() // 当たり判定を行う
+                if(ballX < -100) {
+                    ballX = maxX + 100
+                    jump = true
+                    speed += 2
+                    count += 1
+                    ballDirection = 0
+                    setTimeout(() => {
+                        ballDirection = 1
+                    }, getRandomInt(500, 1000));
+                    drawGamepoint()
+                }
+            }
+        }, 10)
+
+        function init() {
+            isPlaying = null
+            count = 0
+            speed = 4
+            dottyDirection = 0
+            ballDirection = 1
+            jump = true
+            dottyX = 0
+            dottyY = 450
+            ballX = maxX + 100
+            ballY = 530
+            dotty.style.transform = `translate(${dottyX}px, ${dottyY}px)`
+            ball.style.transform = `translate(${ballX}px, ${ballY}px)`
+            dotty.style.display = 'block'
+            drawGamepoint()
+        }
+
+        function checkHit() {
+            if (
+                ballX > dottyX && ballX < dottyX + dotty.width &&
+                ballY > dottyY && ballY < dottyY + dotty.height &&
+                dottyDirection == 0
+            ) {
+                dotty.style.display = 'none'
+                isPlaying = false
+                drawGamepoint()
+            }
+        }
+
+        function drawGamepoint() {
+            document.querySelector('#count').innerHTML = `スコア: ${count}回`
+        }
+    }
+</script>
+
+</html>
