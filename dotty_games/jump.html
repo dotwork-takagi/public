@@ -26,6 +26,21 @@
             height: 3em;
             width: 3em;
         }
+
+        .gameover {
+            animation: rotateScale 2.5s forwards;
+        }
+
+        @keyframes rotateScale {
+            0% {
+                transform: rotate(0deg) scale(1);
+                /* opacity: 1; */
+            }
+            100% {
+                transform: rotate(360deg) scale(0);
+                /* opacity: 0; */
+            }
+        }
     </style>
 </head>
 
@@ -35,7 +50,7 @@
         <span id="score"></span>
     </span>
     <div id='gamebody'>
-        <img id='dotty' src='img/dotty/default.svg'>
+        <img id='dotty' src='img/dotty/default.svg' class=''>
         <img id='ball' src='img/ball/red.png'>
     </div>
 </body>
@@ -51,8 +66,8 @@
         const maxX = body.clientWidth
         const maxY = body.clientHeight
 
-        const dottyDefaultY = 450
-        const ballDefaultY = 530
+        const dottyDefaultY = maxY - dotty.height - 10
+        const ballDefaultY = maxY - ball.height + ball.height / 2
 
         let isPlaying, score, jump, ballSpeed, dottyDirection, ballDirection, dottyX, dottyY, ballX, ballY, dottyDisplay
 
@@ -63,7 +78,7 @@
             ballSpeed = 4
             dottyDirection = 0
             ballDirection = 1
-            dottyX = 0
+            dottyX = 10
             dottyY = dottyDefaultY
             ballX = maxX
             ballY = ballDefaultY
@@ -131,8 +146,12 @@
         }
 
         function drawObject() {
-            dotty.style.transform = `translate(${dottyX}px, ${dottyY}px)`
-            ball.style.transform = `translate(${ballX}px, ${ballY}px)`
+            dotty.style.left = dottyX
+            dotty.style.top = dottyY
+            ball.style.left = ballX
+            ball.style.top = ballY
+            // dotty.style.transform = `translate(${dottyX}px, ${dottyY}px)`
+            // ball.style.transform = `translate(${ballX}px, ${ballY}px)`
             dotty.style.display = dottyDisplay
             ball.style.display = 'block'
         }
