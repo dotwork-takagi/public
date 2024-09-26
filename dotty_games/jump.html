@@ -48,6 +48,7 @@
     <h1>ボールをジャンプでかわそう！</h1>
     <span id="gamepoint">
         <span id="score"></span>
+        <span id="best"></span>
     </span>
     <div id='gamebody'>
         <img id='dotty' src='img/dotty/default.svg' class=''>
@@ -127,6 +128,7 @@
                         ballDirection = 1
                     }, getRandomInt(500, 1000))
                     drawGamepoint()
+                    console.log('ballSpeed:', ballSpeed)
                 }
             }
             drawObject()
@@ -158,6 +160,13 @@
 
         function drawGamepoint() {
             document.querySelector('#score').innerHTML = `スコア: ${score}回`
+
+            let best = localStorage.getItem('jump_best') ?? score
+            if(best < score) {
+                best = score
+                localStorage.setItem('jump_best', best)
+            }
+            document.querySelector('#best').innerHTML = `ベスト: ${best}回`
         }
     }
 </script>
