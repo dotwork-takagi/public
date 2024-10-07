@@ -1,0 +1,162 @@
+<html>
+
+<head>
+    <title>練習</title>
+    <link rel="icon" href="./img/favicon.ico">
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        section {
+            max-width: 960px;
+            margin: auto;
+            text-align: center;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        header {
+            max-width: 960px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        header nav {
+            display: flex;
+        }
+
+        header img {
+            width: 120px;
+            padding: 10px 0;
+        }
+
+        ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        li {
+            padding-right: 1em;
+        }
+
+        #mainvisual img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+        }
+
+        h2 {
+            display: inline-block;
+            border-bottom: solid 1px #383e45;
+            text-align: center;
+            font-size: 32px;
+        }
+
+        #about,
+        #bicycle {
+            text-align: center;
+        }
+
+        #about img {
+            border-radius: 100%;
+            height: 100px;
+            width: 100px;
+            margin: auto 0;
+            margin-right: 30px;
+        }
+
+        #about>div {
+            display: flex;
+            justify-content: center;
+        }
+
+        #about h3 {
+            text-align: left;
+        }
+
+        #bicycle img {
+            width: 100%;
+        }
+
+        #bicycle h3,
+        #bicycle div {
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>
+            <a href="index.html"><img src="img/logo.svg"></a>
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#bicycle">Bicycle</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="mainvisual">
+            <img src="./img/mainvisual.jpg" alt="">
+        </div>
+        <section id="about">
+            <h2>About</h2>
+            <div>
+                <img src="./img/about.jpg" alt="">
+                <div>
+                    <h3>KAKERU MIYAICHI</h3>
+                    <p>
+                        テキストテキストテキストテキストテキストテキストテキスト<br>
+                        テキストテキストテキストテキストテキストテキストテキスト<br>
+                        テキストテキストテキストテキストテキストテキストテキスト
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section id="bicycle">
+            <h2>Bycycle</h2>
+            <ul>
+                <li>
+                    <img src="./img/bicycle1.jpg" alt="">
+                    <h3>タイトルタイトル</h3>
+                    <div>テキストテキストテキスト</div>
+                </li>
+                <li>
+                    <img src="./img/bicycle2.jpg" alt="">
+                    <h3>タイトルタイトル</h3>
+                    <div>テキストテキストテキスト</div>
+                </li>
+                <li>
+                    <img src="./img/bicycle3.jpg" alt="">
+                    <h3>タイトルタイトル</h3>
+                    <div>テキストテキストテキスト</div>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>© 2020 Profile</p>
+    </footer>
+</body>
+
+</html>
