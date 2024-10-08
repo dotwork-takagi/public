@@ -29,6 +29,7 @@
     <h1>フルーツをキャッチしよう！</h1>
     <span id="gamepoint">
         <span id="count"></span>
+        <span id="best"></span>
     </span>
     <div id='gamebody'>
         <img id='dotty' src='img/dotty/default.svg'>
@@ -125,6 +126,13 @@
 
         function drawGamepoint() {
             document.querySelector('#count').innerHTML = `スコア: ${count}回`
+
+            let best = localStorage.getItem('catch_best') ?? count
+            if(best <= count) {
+                best = count
+                localStorage.setItem('catch_best', best)
+            }
+            document.querySelector('#best').innerHTML = `ベスト: ${best}回`
         }
     }
 </script>
