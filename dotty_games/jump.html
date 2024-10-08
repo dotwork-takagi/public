@@ -161,10 +161,11 @@
         function drawGamepoint() {
             document.querySelector('#score').innerHTML = `スコア: ${score}回`
 
-            let best = localStorage.getItem('jump_best') ?? score
+            const key = 'jump_best'
+            let best = localStorage.getItem(key) ?? score
             if(best <= score) {
                 best = score
-                localStorage.setItem('jump_best', best)
+                localStorage.setItem(key, best)
             }
             document.querySelector('#best').innerHTML = `ベスト: ${best}回`
         }
