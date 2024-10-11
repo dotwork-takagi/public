@@ -1,10 +1,18 @@
 # Pages
 ## 作ったもの
 - [キャッチ](https://dotwork-takagi.github.io/public/dotty_games/catch.html)
+  - 上から落ちてくるフルーツをキャッチしよう！
 - [ジャンプ](https://dotwork-takagi.github.io/public/dotty_games/jump.html)
+  - 右から飛んでくるボールをジャンプでかわそう！
 - [目押し](https://dotwork-takagi.github.io/public/dotty_games/meoshi.html)
+  - 交互に切り替わるドッティをクリックしよう！
 - [バウンド](https://dotwork-takagi.github.io/public/dotty_games/bounce.html)
+  - 画面内を動き回るドッティをクリックしよう！
 - [もぐらたたき](https://dotwork-takagi.github.io/public/dotty_games/mogura.html)
+  - 画面内を動き回るドッティをクリックしよう！
 - [瞬間移動](https://dotwork-takagi.github.io/public/dotty_games/teleport.html)
+  - 画面内を動き回るドッティをクリックしよう！
 - [じゃんけん](https://dotwork-takagi.github.io/public/dotty_games/janken.html)
+  - ドッティとじゃんけんで遊ぼう！
 - [シューティング](https://dotwork-takagi.github.io/public/dotty_games/shooting.html)
+  - 敵のドッティにボールを当てよう！
