@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <title>的当て</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src='js/Dollar.js'></script>
+    <script src='js/main.js'></script>
+    <style>
+        img {
+            position: absolute;
+        }
+
+        #ball {
+            height: 50px;
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ボールをドッティに当てよう！</h1>
+    <span id="gamepoint">
+        <span id="count"></span>
+    </span>
+    <div id='gamebody'>
+        <img id='dotty' src='img/dotty/default.svg'>
+        <img id='ball' src='img/ball/red.png'>
+    </div>
+</body>
+
+<script>
+
+    window.onload = function () {
+
+        let isPlaying = null
+        let isBallHold = false
+
+        let count = null
+        let speed = null
+
+        const body = document.body
+
+        const dotty = $('#dotty')
+        const ball = $('#ball')
+
+        let maxX = gamebody.clientWidth
+        let maxY = gamebody.clientHeight
+
+        let dottyX = maxX - dotty.width
+        let dottyY = maxY / 2
+
+        let ballX = 0
+        let ballY = maxY / 2
+
+        let ballXD = 0
+        let ballYD = 0
+
+        let startX = 0
+        let startY = 0
+
+        ball.onmousedown = (e) => { // ゲームを開始する
+            isBallHold = true
+            startX = e.clientX
+            startY = e.clientY
+            setTimeout(() => {
+                isBallHold = false
+                ballXD = startX - e.clientX
+                ballYD = startY - e.clientY
+            }, 100);
+        }
+
+        body.onmousemove = (e) => { // ドッティーを描画する
+            if (isBallHold) {
+                ballX -= (startX - e.clientX)
+                ballY -= (startY - e.clientY)
+                startX = e.clientX
+                startY = e.clientY
+                drawObject()
+            }
+        }
+
+        body.onkeydown = (e) => {
+            if (e.key == 'Escape') {
+                init()
+            }
+        }
+
+        setInterval(() => {
+            ballX += ballXD
+            ballY += ballYD
+            drawObject()
+            checkHit()
+        }, 10)
+
+        init() // 初期化
+
+        function init() {
+            count = 0
+            speed = 4
+            drawObject()
+            drawGamepoint()
+        }
+
+        function checkHit() {
+            if (
+                ballX > dottyX && ballX < dottyX + dotty.width &&
+                ballY > dottyY && ballY < dottyY + dotty.height
+            ) {
+                init_ball()
+            }
+        }
+
+        function init_ball() {
+            ballX = 0
+            ballY = maxY / 2
+            ballXD = 0
+            ballYD = 0
+        }
+
+        function drawObject() {
+            dotty.style.left = dottyX
+            dotty.style.top = dottyY
+            ball.style.left = ballX
+            ball.style.top = ballY
+        }
+
+        function drawGamepoint() {
+            document.querySelector('#count').innerHTML = `スコア: ${count}回`
+        }
+    }
+</script>
+
+</html>
