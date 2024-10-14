@@ -58,23 +58,34 @@
         let startX = 0
         let startY = 0
 
+        let recentX = 0
+        let recentY = 0
+
         ball.onmousedown = (e) => { // ゲームを開始する
             isBallHold = true
             startX = e.clientX
             startY = e.clientY
-            setTimeout(() => {
-                isBallHold = false
-                ballXD = startX - e.clientX
-                ballYD = startY - e.clientY
-            }, 100);
+            recentX = startX
+            recentY = startY
+            // setTimeout(() => {
+
+            // }, 100);
+        }
+
+        ball.onmouseup = (e) => {
+            isBallHold = false
+            // ballXD = startX - e.clientX
+            // ballYD = startY - e.clientY
+            console.log(ballXD)
+            console.log(ballYD)
         }
 
         body.onmousemove = (e) => { // ドッティーを描画する
             if (isBallHold) {
-                ballX -= (startX - e.clientX)
-                ballY -= (startY - e.clientY)
-                startX = e.clientX
-                startY = e.clientY
+                ballX -= (recentX - e.clientX)
+                ballY -= (recentY - e.clientY)
+                // recentX = e.clientX
+                // recentY = e.clientY
                 drawObject()
             }
         }
@@ -86,8 +97,8 @@
         }
 
         setInterval(() => {
-            ballX += ballXD
-            ballY += ballYD
+            ballX -= ballXD
+            ballY -= ballYD
             drawObject()
             checkHit()
         }, 10)
@@ -106,6 +117,8 @@
                 ballX > dottyX && ballX < dottyX + dotty.width &&
                 ballY > dottyY && ballY < dottyY + dotty.height
             ) {
+                count++
+                drawGamepoint()
                 init_ball()
             }
         }

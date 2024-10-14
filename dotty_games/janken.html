@@ -1,14 +1,37 @@
 <head>
     <title>じゃんけん</title>
+    <script src='js/Dollar.js'></script>
     <link rel="stylesheet" href="css/main.css">
     <style>
         input {
-            position: relative;
-            top: -15vh;
             width: 20em;
         }
 
-        img {
+        #dotty {
+            display: flex;
+        }
+
+        #dotty .right {
+            margin: 1em;
+        }
+
+        #dotty .select {
+            display: flex;
+            margin-top: 1em;
+            background-color: blue;
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+        }
+
+        #dotty .select img {
+            height: 50%;
+            width: 50%;
+            margin: auto;
+        }
+
+        #dotty .left img,
+        #user img {
             height: 10vw;
             width: 10vw;
         }
@@ -18,10 +41,18 @@
 <body>
     <h1>ドッティとじゃんけん</h1>
     <div>
-        <img src='img/dotty/default.svg'>
-        <input type="text" id="text" value="僕とじゃんけんで遊びましょう！">
-        <br><br>
-        <div id="select">
+        <div id="dotty">
+            <div class="left">
+                <img src='img/dotty/blue.svg'>
+            </div>
+            <div class="right">
+                <input type="text" id="text" value="僕とじゃんけんで遊びましょう！">
+                <div class="select">
+                    <img id="choice" src="img/janken/gu.png">
+                </div>
+            </div>
+        </div>
+        <div id="user">
             <img id="gu" src="img/janken/gu.png">
             <img id="choki" src="img/janken/choki.png">
             <img id="pa" src="img/janken/pa.png">
@@ -65,7 +96,20 @@
     function play(userChoice) {
         const dottyChoice = getComputerChoice()
         const result = determineWinner(userChoice, dottyChoice)
-        text.value = `僕は${dottyChoice}なので、${result}ですね！`
+        text.value = `${result}ですね！`
+        switch (dottyChoice) {
+            case 'グー':
+                $('#choice').src = 'img/janken/gu.png'
+                break;
+            case 'チョキ':
+                $('#choice').src = 'img/janken/choki.png'
+                break;
+            case 'パー':
+                $('#choice').src = 'img/janken/pa.png'
+                break;
+            default:
+                break;
+        }
     }
 
     function getComputerChoice() {
