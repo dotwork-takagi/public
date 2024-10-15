@@ -74,8 +74,8 @@
 
         ball.onmouseup = (e) => {
             isBallHold = false
-            // ballXD = startX - e.clientX
-            // ballYD = startY - e.clientY
+            ballXD = (startX - e.clientX) / 10
+            ballYD = (startY - e.clientY) / 10
             console.log(ballXD)
             console.log(ballYD)
         }
@@ -84,8 +84,8 @@
             if (isBallHold) {
                 ballX -= (recentX - e.clientX)
                 ballY -= (recentY - e.clientY)
-                // recentX = e.clientX
-                // recentY = e.clientY
+                recentX = e.clientX
+                recentY = e.clientY
                 drawObject()
             }
         }
