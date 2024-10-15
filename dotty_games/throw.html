@@ -114,8 +114,8 @@
 
         function checkHit() {
             if (
-                ballX > dottyX && ballX < dottyX + dotty.width &&
-                ballY > dottyY && ballY < dottyY + dotty.height
+                ballX > dottyX - ball.width && ballX < dottyX + dotty.width &&
+                ballY > dottyY - ball.height && ballY < dottyY + dotty.height
             ) {
                 count++
                 drawGamepoint()

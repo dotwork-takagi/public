@@ -112,8 +112,8 @@
 
         function checkHit() {
             if (
-                fruitX > dottyX && fruitX < dottyX + dotty.width &&
-                fruitY > dottyY && fruitY < dottyY + dotty.height
+                fruitX > dottyX - fruit.width && fruitX < dottyX + dotty.width &&
+                fruitY > dottyY - fruit.height && fruitY < dottyY + dotty.height
             ) {
                 fruitX = getRandomInt(0, maxX)
                 fruitY = -200
