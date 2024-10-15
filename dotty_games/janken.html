@@ -70,6 +70,19 @@
     const choki = document.querySelector("#choki")
     const pa = document.querySelector("#pa")
 
+    // setInterval(() => {
+    //     if (isPlaying) { return }
+    //     if ($('#choice').src.endsWith('/gu.png')) {
+    //         $('#choice').src = 'img/janken/choki.png'
+    //     }
+    //     else if ($('#choice').src.endsWith('/choki.png')) {
+    //         $('#choice').src = 'img/janken/pa.png'
+    //     }
+    //     else if ($('#choice').src.endsWith('/pa.png')) {
+    //         $('#choice').src = 'img/janken/gu.png'
+    //     }
+    // }, 200)
+
     gu.onclick = () => {
         if (isPlaying) { return }
         isPlaying = true
