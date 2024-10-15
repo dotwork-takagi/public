@@ -62,7 +62,7 @@
 </body>
 
 <script>
-    let isPlaying = false
+    let isPlayed = false
 
     const text = document.querySelector("#text")
 
@@ -71,7 +71,7 @@
     const pa = document.querySelector("#pa")
 
     // setInterval(() => {
-    //     if (isPlaying) { return }
+    //     if (isPlayed) { return }
     //     if ($('#choice').src.endsWith('/gu.png')) {
     //         $('#choice').src = 'img/janken/choki.png'
     //     }
@@ -84,27 +84,43 @@
     // }, 200)
 
     gu.onclick = () => {
-        if (isPlaying) { return }
-        isPlaying = true
+        if (isPlayed) { return }
+        isPlayed = true
         choki.style.display = "none"
         pa.style.display = "none"
         play("グー")
+        event.stopPropagation()
     }
 
     choki.onclick = () => {
-        if (isPlaying) { return }
-        isPlaying = true
+        if (isPlayed) { return }
+        isPlayed = true
         gu.style.display = "none"
         pa.style.display = "none"
         play("チョキ")
+        event.stopPropagation()
     }
 
     pa.onclick = () => {
-        if (isPlaying) { return }
-        isPlaying = true
+        if (isPlayed) { return }
+        isPlayed = true
         gu.style.display = "none"
         choki.style.display = "none"
         play("パー")
+        event.stopPropagation()
+    }
+
+    document.body.onclick = () => {
+        newGame()
+    }
+
+    function newGame() {
+        isPlayed = false
+        text.value = '僕とじゃんけんで遊びましょう！'
+        gu.style.display = ""
+        choki.style.display = ""
+        pa.style.display = ""
+        document.body.style.backgroundColor = 'white'
     }
 
     function play(userChoice) {
