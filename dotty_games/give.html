@@ -1,13 +1,29 @@
 <html>
 
 <head>
-    <title>的当て</title>
+    <title>玉運び</title>
     <link rel="stylesheet" href="css/main.css">
     <script src='js/Dollar.js'></script>
     <script src='js/main.js'></script>
     <style>
+        body {
+            margin: 0;
+        }
+
+        h1 {
+            margin-left: 8;
+        }
+
         img {
             position: absolute;
+        }
+
+        #wall1,
+        #wall2 {
+            position: absolute;
+            height: 10px;
+            width: 100%;
+            background-color: red;
         }
 
         #ball {
@@ -18,13 +34,15 @@
 </head>
 
 <body>
-    <h1>ボールをドッティに当てよう！</h1>
+    <h1>ボールをドッティに渡そう！</h1>
     <span id="gamepoint">
         <span id="count"></span>
     </span>
     <div id='gamebody'>
         <img id='dotty' src='img/dotty/default.svg'>
         <img id='ball' src='img/ball/red.png'>
+        <div id="wall1"></div>
+        <div id="wall2"></div>
     </div>
 </body>
 
@@ -42,15 +60,17 @@
 
         const dotty = $('#dotty')
         const ball = $('#ball')
+        const wall1 = $('#wall1')
+        const wall2 = $('#wall2')
 
         let maxX = gamebody.clientWidth
         let maxY = gamebody.clientHeight
 
-        let dottyX = maxX - dotty.width
+        let dottyX = maxX - dotty.clientWidth
         let dottyY = maxY / 2
 
         let ballX = 0
-        let ballY = maxY / 2
+        let ballY = 0
 
         let ballXD = 0
         let ballYD = 0
@@ -60,6 +80,12 @@
 
         let recentX = 0
         let recentY = 0
+
+        let wall1X = dotty.width * -1
+        let wall1Y = dottyY - wall1.clientHeight
+
+        let wall2X = dotty.width * -1
+        let wall2Y = dottyY + dotty.clientHeight
 
         ball.onmousedown = (e) => { // ゲームを開始する
             isBallHold = true
@@ -73,11 +99,9 @@
         }
 
         ball.onmouseup = (e) => {
-            isBallHold = false
-            ballXD = (startX - e.clientX) / 10
-            ballYD = (startY - e.clientY) / 10
-            console.log(ballXD)
-            console.log(ballYD)
+            // isBallHold = false
+            // ballXD = (startX - e.clientX) / 10
+            // ballYD = (startY - e.clientY) / 10
         }
 
         body.onmousemove = (e) => { // ドッティーを描画する
@@ -99,6 +123,12 @@
         setInterval(() => {
             ballX -= ballXD
             ballY -= ballYD
+            // if (ballX < 0 || ballX > maxX) {
+            //     ballXD *= -1
+            // }
+            // if (ballY < 0 || ballY > maxY) {
+            //     ballYD *= -1
+            // }
             drawObject()
             checkHit()
         }, 10)
@@ -108,6 +138,7 @@
         function init() {
             count = 0
             speed = 4
+            init_ball()
             drawObject()
             drawGamepoint()
         }
@@ -121,13 +152,28 @@
                 drawGamepoint()
                 init_ball()
             }
+            if (
+                ballX > wall1X - ball.width && ballX < wall1X + wall1.clientWidth &&
+                ballY > wall1Y - ball.height && ballY < wall1Y + wall1.clientHeight
+            ) {
+                alert()
+            }
+            if (
+                ballX > wall2X - ball.width && ballX < wall2X + wall2.clientWidth &&
+                ballY > wall2Y - ball.height && ballY < wall2Y + wall2.clientHeight
+            ) {
+                alert()
+            }
         }
 
         function init_ball() {
             ballX = 0
-            ballY = maxY / 2
+            ballY = maxY / 2 + ball.height
             ballXD = 0
             ballYD = 0
+            isBallHold = false
+            wall1Y += 3
+            wall2Y -= 3
         }
 
         function drawObject() {
@@ -135,6 +181,10 @@
             dotty.style.top = dottyY
             ball.style.left = ballX
             ball.style.top = ballY
+            wall1.style.left = wall1X
+            wall1.style.top = wall1Y
+            wall2.style.left = wall2X
+            wall2.style.top = wall2Y
         }
 
         function drawGamepoint() {

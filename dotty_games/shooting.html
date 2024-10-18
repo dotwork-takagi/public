@@ -60,6 +60,8 @@
         let maxX = gamebody.clientWidth - dotty_p1.clientWidth
         let maxY = gamebody.clientHeight - dotty_p1.clientHeight
 
+        console.log(dotty_p1.clientWidth)
+
         let dotty_p1_x = maxX / 2
         let dotty_p1_y = maxY
         let dotty_p1_display = ''
@@ -75,6 +77,15 @@
         drawObject()
         drawGamepoint()
 
+        body.onmousemove = (e) => { // ドッティーを描画する
+            dotty_p1_x = e.clientX - dotty_p1.width / 2
+            drawObject()
+        }
+
+        body.onmousedown = () => {
+            throwBall()
+        }
+
         body.onkeydown = (e) => {
             if (e.key == 'ArrowLeft') {
                 direction = -1
@@ -83,10 +94,7 @@
                 direction = 1
             }
             if (e.code == 'Space') {
-                ball_x = dotty_p1_x + dotty_p1.clientWidth / 2 - ball.clientWidth / 2
-                ball_y = dotty_p1_y
-                ball_display = ''
-                drawObject()
+                throwBall()
             }
         }
 
@@ -100,6 +108,13 @@
             drawObject()
             checkHit()
         }, 10)
+
+        function throwBall() {
+            ball_x = dotty_p1_x + dotty_p1.clientWidth / 2 - ball.clientWidth / 2
+            ball_y = dotty_p1_y
+            ball_display = ''
+            drawObject()
+        }
 
         function drawObject() {
             dotty_p1.style.transform = `translate(${dotty_p1_x}px, ${dotty_p1_y}px)`
@@ -116,14 +131,11 @@
         }
 
         function checkHit() {
-            let isHit = false
             if (
-                ball_x > dotty_p2_x && ball_x < dotty_p2_x + dotty_p2.width &&
-                ball_y > dotty_p2_y && ball_y < dotty_p2_y + dotty_p2.height
+                ball_x > dotty_p2_x - ball.width && ball_x < dotty_p2_x + dotty_p2.width &&
+                ball_y > dotty_p2_y - ball.height && ball_y < dotty_p2_y + dotty_p2.height &&
+                ball_display == ''
             ) {
-                isHit = true
-            }
-            if (isHit && ball_display == '') {
                 if (time == 10) { // 開始前
                     time -= 1
                     setInterval(() => { // 時間を制御する
