@@ -41,6 +41,11 @@
 
 <body>
     <h1>ドッティとじゃんけん</h1>
+    <span id="gamepoint">
+        <span id="win"></span>
+        <span id="lose"></span>
+        <span id="draw"></span>
+    </span>
     <div>
         <div id="dotty">
             <div class="left">
@@ -64,6 +69,10 @@
 <script>
     let isPlayed = false
 
+    let count_win = 0
+    let count_lose = 0
+    let count_draw = 0
+
     const text = document.querySelector("#text")
 
     const gu = document.querySelector("#gu")
@@ -82,6 +91,8 @@
     //         $('#choice').src = 'img/janken/gu.png'
     //     }
     // }, 200)
+
+    drawGamepoint()
 
     gu.onclick = () => {
         if (isPlayed) { return }
@@ -127,31 +138,33 @@
         const dottyChoice = getComputerChoice()
         const result = determineWinner(userChoice, dottyChoice)
         text.value = `${result}ですね！`
+        drawGamepoint()
         switch (dottyChoice) {
             case 'グー':
                 $('#choice').src = 'img/janken/gu.png'
-                break;
+                break
             case 'チョキ':
                 $('#choice').src = 'img/janken/choki.png'
-                break;
+                break
             case 'パー':
                 $('#choice').src = 'img/janken/pa.png'
-                break;
+                break
             default:
-                break;
+                break
         }
     }
 
     function getComputerChoice() {
-        const choices = ["グー", "チョキ", "パー"];
-        const randomIndex = Math.floor(Math.random() * choices.length);
-        return choices[randomIndex];
+        const choices = ["グー", "チョキ", "パー"]
+        const randomIndex = Math.floor(Math.random() * choices.length)
+        return choices[randomIndex]
     }
 
     function determineWinner(userChoice, computerChoice) {
         if (userChoice === computerChoice) {
             document.body.style.backgroundColor = '#ffffa3'
-            return "引き分け";
+            count_draw++
+            return "引き分け"
         }
         if (
             (userChoice === "グー" && computerChoice === "チョキ") ||
@@ -159,9 +172,17 @@
             (userChoice === "パー" && computerChoice === "グー")
         ) {
             document.body.style.backgroundColor = 'd1ffa3'
-            return "あなたの勝ち";
+            count_win++
+            return "あなたの勝ち"
         }
         document.body.style.backgroundColor = 'ffa3a3'
-        return "僕の勝ち";
+        count_lose++
+        return "僕の勝ち"
     }
+
+    function drawGamepoint() {
+            document.querySelector('#win').innerHTML = `勝ち: ${count_win}回`
+            document.querySelector('#lose').innerHTML = `負け: ${count_lose}回`
+            document.querySelector('#draw').innerHTML = `分け: ${count_draw}回`
+        }
 </script>
