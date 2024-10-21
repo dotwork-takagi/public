@@ -16,3 +16,5 @@
   - ドッティとじゃんけんで遊ぼう！
 - [シューティング](https://dotwork-takagi.github.io/public/dotty_games/shooting.html)
   - 敵のドッティにボールを当てよう！
+- [玉運び](https://dotwork-takagi.github.io/public/dotty_games/give.html)
+  - ドッティまでボールを運ぼう！
