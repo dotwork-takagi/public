@@ -50,7 +50,7 @@
 
     window.onload = function () {
 
-        let isPlaying = null
+        let isPlaying = true
         let isBallHold = false
 
         let count = null
@@ -81,13 +81,9 @@
         let recentX = 0
         let recentY = 0
 
-        let wall1X = dotty.width * -1
-        let wall1Y = dottyY - wall1.clientHeight
+        let wall1X, wall1Y, wall2X, wall2Y
 
-        let wall2X = dotty.width * -1
-        let wall2Y = dottyY + dotty.clientHeight
-
-        ball.onmousedown = (e) => { // ゲームを開始する
+        ball.onmousedown = (e) => {
             isBallHold = true
             startX = e.clientX
             startY = e.clientY
@@ -118,26 +114,41 @@
             if (e.key == 'Escape') {
                 init()
             }
+            if (e.key == 'Enter') {
+                // for (let i = 0; i < 15; i++) {
+                //     success()
+                // }
+            }
         }
 
         setInterval(() => {
-            ballX -= ballXD
-            ballY -= ballYD
-            // if (ballX < 0 || ballX > maxX) {
-            //     ballXD *= -1
-            // }
-            // if (ballY < 0 || ballY > maxY) {
-            //     ballYD *= -1
-            // }
-            drawObject()
-            checkHit()
+            if (isPlaying) {
+                ballX -= ballXD
+                ballY -= ballYD
+                // if (ballX < 0 || ballX > maxX) {
+                //     ballXD *= -1
+                // }
+                // if (ballY < 0 || ballY > maxY) {
+                //     ballYD *= -1
+                // }
+                drawObject()
+                checkHit()
+            }
         }, 10)
 
         init() // 初期化
 
         function init() {
+            isPlaying = true
             count = 0
             speed = 4
+
+            wall1X = dotty.width * -1
+            wall1Y = dottyY - wall1.clientHeight
+
+            wall2X = dotty.width * -1
+            wall2Y = dottyY + dotty.clientHeight + wall1.clientHeight
+
             init_ball()
             drawObject()
             drawGamepoint()
@@ -148,21 +159,40 @@
                 ballX > dottyX - ball.width && ballX < dottyX + dotty.width &&
                 ballY > dottyY - ball.height && ballY < dottyY + dotty.height
             ) {
-                count++
-                drawGamepoint()
-                init_ball()
+                success()
             }
             if (
                 ballX > wall1X - ball.width && ballX < wall1X + wall1.clientWidth &&
                 ballY > wall1Y - ball.height && ballY < wall1Y + wall1.clientHeight
             ) {
-                alert()
+                failure()
             }
             if (
                 ballX > wall2X - ball.width && ballX < wall2X + wall2.clientWidth &&
                 ballY > wall2Y - ball.height && ballY < wall2Y + wall2.clientHeight
             ) {
-                alert()
+                failure()
+            }
+        }
+
+        function success() {
+            count++
+            if (count == 15) {
+                isPlaying = false
+                alert('ゲームクリア！おめでとう！')
+            } else {
+                wall1Y += 3
+                wall2Y -= 3
+                drawGamepoint()
+                init_ball()
+            }
+        }
+
+        function failure() {
+            isPlaying = false
+            let result = window.confirm('ゲームオーバー。リトライする？');
+            if (result) {
+                init()
             }
         }
 
@@ -172,8 +202,6 @@
             ballXD = 0
             ballYD = 0
             isBallHold = false
-            wall1Y += 3
-            wall2Y -= 3
         }
 
         function drawObject() {
