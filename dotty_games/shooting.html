@@ -23,6 +23,7 @@
         }
     </style>
     <script src='js/AudioPlayer.js'></script>
+    <script src='js/Dollar.js'></script>
     <script src='js/main.js'></script>
 </head>
 
@@ -52,13 +53,12 @@
         let direction = 0
 
         const body = document.body
-        const gamebody = document.querySelector('#gamebody')
         const dotty_p1 = document.querySelector('#dotty_p1')
         const dotty_p2 = document.querySelector('#dotty_p2')
         const ball = document.querySelector('#ball')
 
-        let maxX = gamebody.clientWidth - dotty_p1.clientWidth
-        let maxY = gamebody.clientHeight - dotty_p1.clientHeight
+        let maxX = body.clientWidth - dotty_p1.clientWidth
+        let maxY = body.clientHeight - $('h1').clientHeight - dotty_p1.clientHeight
 
         console.log(dotty_p1.clientWidth)
 

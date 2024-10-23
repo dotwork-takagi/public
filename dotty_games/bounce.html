@@ -3,6 +3,7 @@
 <head>
     <title>バウンド</title>
     <link rel="stylesheet" href="css/main.css">
+    <script src='js/Dollar.js'></script>
     <script src='js/main.js'></script>
 </head>
 
@@ -24,11 +25,13 @@
         let isPlaying = null
 
         const body = document.body
-        const gamebody = document.querySelector('#gamebody')
         const img = document.querySelector('img')
 
-        let maxX = gamebody.clientWidth - img.clientWidth
-        let maxY = gamebody.clientHeight - img.clientHeight
+        let maxX = body.clientWidth - img.clientWidth
+        let maxY = body.clientHeight - $('h1').clientHeight - img.clientHeight
+
+        console.log($('h1').clientHeight)
+        console.log(img.clientHeight)
 
         let x = 0
         let y = 0
