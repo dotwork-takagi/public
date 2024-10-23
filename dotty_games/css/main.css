@@ -1,6 +1,6 @@
 body {
-    overflow: hidden; /* はみ出した部分を隠す */
-    user-select: none; /* 選択禁止にする */
+    overflow: hidden;
+    user-select: none;
     /* cursor: url('../img/cur/bone.cur'), default; */
 }
 
@@ -9,7 +9,7 @@ h1 {
 }
 
 img {
-    -webkit-user-drag: none; /* ドラッグ禁止にする */
+    -webkit-user-drag: none;
 }
 
 #gamebody {

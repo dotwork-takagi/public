@@ -3,6 +3,13 @@
     <script src='js/Dollar.js'></script>
     <link rel="stylesheet" href="css/main.css">
     <style>
+        #container {
+            display: inline-block;
+            border: 5px solid blue;
+            border-radius: 5px;
+            padding: 100px;
+        }
+
         input {
             width: 20em;
         }
@@ -48,28 +55,32 @@
 </head>
 
 <body>
-    <h1>ドッティとじゃんけん</h1>
-    <span id="gamepoint">
-        <span id="win"></span>
-        <span id="lose"></span>
-        <span id="draw"></span>
-    </span>
-    <div id="gamebody">
-        <div id="dotty">
-            <div class="left">
-                <img src='img/dotty/blue.svg'>
-            </div>
-            <div class="right">
-                <input type="text" id="text" value="僕とじゃんけんで遊びましょう！">
-                <div class="select">
-                    <img id="choice" src="img/janken/gu.png">
+    <div id="container">
+        <header>
+            <h1>ドッティとじゃんけん</h1>
+            <span id="gamepoint">
+                <span id="win"></span>
+                <span id="lose"></span>
+                <span id="draw"></span>
+            </span>
+        </header>
+        <div id="gamebody">
+            <div id="dotty">
+                <div class="left">
+                    <img src='img/dotty/blue.svg'>
+                </div>
+                <div class="right">
+                    <input type="text" id="text" value="僕とじゃんけんで遊びましょう！">
+                    <div class="select">
+                        <img id="choice" src="img/janken/gu.png">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="user">
-            <img id="gu" src="img/janken/gu.png">
-            <img id="choki" src="img/janken/choki.png">
-            <img id="pa" src="img/janken/pa.png">
+            <div id="user">
+                <img id="gu" src="img/janken/gu.png">
+                <img id="choki" src="img/janken/choki.png">
+                <img id="pa" src="img/janken/pa.png">
+            </div>
         </div>
     </div>
 </body>
