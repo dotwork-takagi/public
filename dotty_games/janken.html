@@ -3,11 +3,19 @@
     <script src='js/Dollar.js'></script>
     <link rel="stylesheet" href="css/main.css">
     <style>
+        body {
+            text-align: center;
+        }
+
         #container {
             display: inline-block;
             border: 5px solid blue;
             border-radius: 5px;
-            padding: 100px;
+            padding: 50px;
+        }
+
+        footer {
+            margin-top: 50px;
         }
 
         input {
@@ -16,7 +24,7 @@
 
         #dotty {
             display: flex;
-            margin-bottom: 1em;
+            margin-bottom: 50px;
         }
 
         #dotty .left {
@@ -40,7 +48,7 @@
             width: 100px;
         }
 
-        #dotty .select img {
+        #dotty .right img {
             height: 50%;
             width: 50%;
             margin: auto;
@@ -58,11 +66,6 @@
     <div id="container">
         <header>
             <h1>ドッティとじゃんけん</h1>
-            <span id="gamepoint">
-                <span id="win"></span>
-                <span id="lose"></span>
-                <span id="draw"></span>
-            </span>
         </header>
         <div id="gamebody">
             <div id="dotty">
@@ -70,7 +73,7 @@
                     <img src='img/dotty/blue.svg'>
                 </div>
                 <div class="right">
-                    <input type="text" id="text" value="僕とじゃんけんで遊びましょう！">
+                    <input type="text" id="text" value="僕とじゃんけんで遊びましょう！" readonly>
                     <div class="select">
                         <img id="choice" src="img/janken/gu.png">
                     </div>
@@ -82,6 +85,13 @@
                 <img id="pa" src="img/janken/pa.png">
             </div>
         </div>
+        <footer>
+            <span id="gamepoint">
+                <span id="win"></span>
+                <span id="lose"></span>
+                <span id="draw"></span>
+            </span>
+        </footer>
     </div>
 </body>
 
