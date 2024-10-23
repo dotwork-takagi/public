@@ -173,7 +173,7 @@
         gu.style.display = ""
         choki.style.display = ""
         pa.style.display = ""
-        document.body.style.backgroundColor = 'white'
+        $('#container').style.backgroundColor = 'white'
     }
 
     function play(userChoice) {
@@ -204,7 +204,7 @@
 
     function determineWinner(userChoice, computerChoice) {
         if (userChoice === computerChoice) {
-            document.body.style.backgroundColor = '#ffffa3'
+            $('#container').style.backgroundColor = '#ffffa3'
             count_draw++
             return "引き分け"
         }
@@ -213,11 +213,11 @@
             (userChoice === "チョキ" && computerChoice === "パー") ||
             (userChoice === "パー" && computerChoice === "グー")
         ) {
-            document.body.style.backgroundColor = 'd1ffa3'
+            $('#container').style.backgroundColor = 'd1ffa3'
             count_win++
             return "あなたの勝ち"
         }
-        document.body.style.backgroundColor = 'ffa3a3'
+        $('#container').style.backgroundColor = 'ffa3a3'
         count_lose++
         return "僕の勝ち"
     }
