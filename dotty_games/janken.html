@@ -23,12 +23,20 @@
 
         input {
             width: 16em;
+            display: none;
         }
 
         #dotty {
-            display: flex;
+            /* display: flex; */
             padding-bottom: 25px;
             border-bottom: 2px solid blue;
+        }
+
+        #dotty_inner {
+            display: flex;
+            position: relative;
+            top: 10px;
+            left: 50px;
         }
 
         #dotty .left {
@@ -44,18 +52,41 @@
         }
 
         #dotty .select {
-            display: flex;
+            position: relative;
+            top: -40px;
             margin-top: 1em;
             background-color: blue;
             border-radius: 50%;
-            height: 100px;
-            width: 100px;
+            height: 200px;
+            width: 250px;
+        }
+
+        #dotty .select:before {
+            content: "";
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 50px solid blue;
+            position: absolute;
+            bottom: 25px;
+            left: 5px;
+        }
+
+        #text {
+            color: white;
+            font-size: 2.5em;
+            margin: auto;
+            position: relative;
+            top: 40px;
         }
 
         #dotty .right img {
-            height: 50%;
-            width: 50%;
+            display: none;
+            height: 80px;
+            width: 80px;
             margin: auto;
+            position: absolute;
+            left: 85px;
+            top: 100px;
         }
 
         #user {
@@ -79,13 +110,19 @@
         </header>
         <div id="gamebody">
             <div id="dotty">
-                <div class="left">
-                    <img src='img/dotty/blue.svg'>
-                </div>
-                <div class="right">
-                    <input type="text" id="text" value="僕とじゃんけんで遊びましょう！" readonly>
-                    <div class="select">
-                        <img id="choice" src="img/janken/gu.png">
+                <div id="dotty_inner">
+                    <div class="left">
+                        <img src='img/dotty/blue.svg'>
+                    </div>
+                    <div class="right">
+                        <div class="select">
+                            <p id="text">
+                                <span class="upper">じゃん</span>
+                                <br>
+                                <span class="lower">け～ん</span>
+                            </p>
+                            <img id="choice" src="img/janken/gu.png">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,6 +208,9 @@
         choki.style.display = ""
         pa.style.display = ""
         $('#container').style.backgroundColor = 'white'
+        $('#choice').style.display = 'none'
+        $('#text .upper').innerHTML = 'じゃん'
+        $('#text .lower').innerHTML = 'け～ん'
     }
 
     function play(userChoice) {
@@ -180,12 +220,21 @@
         drawGamepoint()
         switch (dottyChoice) {
             case 'グー':
+                $('#text .upper').innerHTML = 'グー!!'
+                $('#text .lower').innerHTML = ''
+                $('#choice').style.display = 'block'
                 $('#choice').src = 'img/janken/gu.png'
                 break
             case 'チョキ':
+                $('#text .upper').innerHTML = 'チョキ!!'
+                $('#text .lower').innerHTML = ''
+                $('#choice').style.display = 'block'
                 $('#choice').src = 'img/janken/choki.png'
                 break
             case 'パー':
+                $('#text .upper').innerHTML = 'パー!!'
+                $('#text .lower').innerHTML = ''
+                $('#choice').style.display = 'block'
                 $('#choice').src = 'img/janken/pa.png'
                 break
             default:
