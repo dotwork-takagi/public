@@ -17,8 +17,8 @@ img {
 } */
 
 #gamepoint span {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding: 8px;
+    margin: 10px;
     border: 3px solid #9C6500;
     position: relative;
     top: -0.4em;
