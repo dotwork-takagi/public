@@ -1,0 +1,263 @@
+<html>
+
+<head>
+    <title>練習</title>
+    <link rel="icon" href="./img/favicon.ico">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            max-width: 960px;
+            margin: 0 auto 130px auto;
+            font-size: 0.9rem;
+            padding: 0 4%;
+        }
+
+        body,
+        ul,
+        dd {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 65px;
+        }
+
+        header {
+            max-width: 960px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 270px;
+            margin: 0 auto;
+            padding: 0 4%;
+        }
+
+        header ul {
+            display: flex;
+            padding: 10px 0;
+        }
+
+        header li {
+            font-size: 0.9rem;
+            margin-left: 30px;
+        }
+
+        header li img.icon {
+            width: 20px;
+        }
+
+        header li a {
+            color: #24292e;
+        }
+
+        #mainvisual {
+            margin-bottom: 80px;
+        }
+
+        #mainvisual img {
+            width: 100%;
+            max-width: 1920px;
+            height: 420px;
+            object-fit: cover;
+        }
+
+        #about p {
+            text-align: justify;
+        }
+
+        #about li:first-child {
+            margin-bottom: 30px;
+        }
+
+        #works ul {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        #works li {
+            width: 31%;
+            margin-bottom: 23px;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        #news dl {
+            display: flex;
+            flex-wrap: wrap;
+            border-top: solid 1px #c8c8c8;
+            margin-bottom: 20px;
+        }
+
+        #news dt {
+            width: 20%;
+            border-bottom: solid 1px #c8c8c8;
+            padding: 15px;
+        }
+
+        #news dd {
+            width: 80%;
+            border-bottom: solid 1px #c8c8c8;
+            padding: 15px;
+        }
+
+        #contact dl {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        #contact dt {
+            width: 15%;
+        }
+
+        #contact dd {
+            width: 85%;
+            margin-bottom: 10px;
+        }
+
+        #contact dd input,
+        #contact dd textarea {
+            width: 100%;
+            border: solid 1px #c8c8c8;
+            padding: 10px;
+        }
+
+        #contact dd textarea {
+            height: 10rem;
+        }
+
+        #contact .button {
+            text-align: center;
+        }
+
+        #contact .button input {
+            width: 200px;
+            background-color: #24292e;
+            color: #fff;
+            padding: 15px 0;
+            border: solid 1px #24292e;
+        }
+
+        footer {
+            background-color: #24292e;
+            color: #fff;
+            font-size: 0.5rem;
+            padding: 10px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 class="site-title">
+            <a href="index.html"><img src="img/logo.svg" alt="My Work"></a>
+        </h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#about">About</a>
+                </li>
+                <li>
+                    <a href="#works">Works</a>
+                </li>
+                <li>
+                    <a href="#news">News</a>
+                </li>
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <img class="icon" src="img/icon-instagram.png" alt="インスタグラム">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="mainvisual">
+            <picture>
+                <source media="(max-width: 600px)" srcset="img/mainvisual-sp.jpg">
+                <img src="img/mainvisual-pc.jpg" alt="テキストテキストテキスト">
+            </picture>
+        </div>
+        <section id="about" class="wrapper">
+            <h2>About</h2>
+            <ul>
+                <li>Xxxxx Ashley</li>
+                <li>2th Floor xxxxx Building x-x-x Nishiazabu, Minato-ku, Tokyo 106-0031 Japan</li>
+                <li>tel: 000-0000-0000</li>
+                <li>url: www.xxxxxx.jp</li>
+                <li>mail: xxx@xxxxxx.jp</li>
+            </ul>
+            <p>
+                プロフィールテキストテキストテキストテキストテキストテキストテキストテキストテキストスト テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+                テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+            </p>
+        </section>
+        <section id="works" class="wrapper">
+            <h2>Works</h2>
+            <ul>
+                <li><img src="img/works1.jpg" alt=""></li>
+                <li><img src="img/works2.jpg" alt=""></li>
+                <li><img src="img/works3.jpg" alt=""></li>
+                <li><img src="img/works4.jpg" alt=""></li>
+                <li><img src="img/works5.jpg" alt=""></li>
+                <li><img src="img/works6.jpg" alt=""></li>
+            </ul>
+        </section>
+        <section id="news" class="wrapper">
+            <h2>News</h2>
+            <dl>
+                <dt>2020.XX.XX</dt>
+                <dd>デザイン雑誌「ＸＸＸＸＸＸ Vol.11」に掲載していただきました。</dd>
+                <dt>2020.XX.XX</dt>
+                <dd>ＸＸ月ＸＸ日から写真集「ＸＸＸＸＸＸＸ」の販売を開始します。</dd>
+                <dt>2019.XX.XX</dt>
+                <dd>【イベント開催のお知らせ】テキストテキストテキストテキストテキストテキストテキスト</dd>
+                <dt>2019.XX.XX</dt>
+                <dd>デザイン雑誌「ＸＸＸＸＸＸ Vol.10」に掲載していただきました。</dd>
+                <dt>2019.XX.XX</dt>
+                <dd>【個展開催のお知らせ】テキストテキストテキストテキストテキストテキストテキスト</dd>
+            </dl>            
+        </section>
+        <section id="contact" class="wrapper">
+            <h2>Contact</h2>
+            <form action="#" method="post">
+                <dl>
+                    <dt><label for="name">NAME</label></dt>
+                    <dd><input type="text" id="name" name="your-name"></dd>
+                    <dt><label for="email">E-mail</label></dt>
+                    <dd><input type="email" id="email" name="your-email"></dd>
+                    <dt><label for="message">MESSAGE</label></dt>
+                    <dd><textarea id="message" name="your-message"></textarea></dd>
+                </dl>
+                <div class="button"><input type="submit" value="送信"></div>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>© 2020 My Work</p>
+    </footer>
+</body>
+
+</html>
