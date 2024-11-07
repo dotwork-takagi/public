@@ -1,0 +1,148 @@
+body {
+    margin: 0;
+    font-family: "Arial", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    font-size: 0.875rem;
+    color: #2a2a2a;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.btn {
+    color: #2a2a2a;
+    border: solid 1px #2a2a2a;
+    display: inline-block;
+    font-size: 0.750rem;
+    padding: 14px 36px;
+    margin-top: 30px;
+}
+
+header {
+    height: 100vh;
+    background-image: url(./img/mainvisual.jpg);
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    margin-bottom: 80px;
+    position: relative;
+}
+
+header h1 {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+#magazine,
+#fashion {
+    text-align: center;
+}
+
+#magazine h2,
+#fashion h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+#magazine .flex-item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+#magazine .flex-item .item {
+    width: 49%;
+    position: relative;
+}
+
+#magazine .text {
+    max-width: 290px;
+    color: #fff;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px 0;
+    margin: 0 auto;
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+}
+
+#fashion {
+    height: 520px;
+    background-image: url(./img/fashion.jpg);
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding-top: 60px;
+    margin-bottom: 80px;
+}
+
+.catalog-antique .flex-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.catalog-antique .item {
+    width: 48%;
+    text-align: center;
+}
+
+footer {
+    background-color: #333;
+    font-size: 0.750rem;
+}
+
+footer .flex-item {
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+footer .item:first-child {
+    padding: 60px 0;
+}
+footer .item {
+    width: 33%;
+    line-height: 2;
+}
+
+footer .copyright {
+    background-color: #fff;
+    text-align: center;
+    padding: 30px 0;
+}
+
+footer .item .title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+footer .item li::before {
+    content: "-";
+    margin-right: 5px;
+}
