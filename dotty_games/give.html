@@ -34,7 +34,7 @@
 </head>
 
 <body>
-    <h1>ボールをドッティに渡そう！</h1>
+    <h1>ボールをドッティまで運ぼう！</h1>
     <span id="gamepoint">
         <span id="count"></span>
     </span>
@@ -115,7 +115,7 @@
                 init()
             }
             if (e.key == 'Enter') {
-                for (let i = 0; i < 14; i++) {
+                while (count < 14) {
                     success()
                 }
             }
@@ -179,6 +179,7 @@
             count++
             if (count == 15) {
                 isPlaying = false
+                drawGamepoint()
                 alert('ゲームクリア！おめでとう！')
             } else {
                 wall1Y += 3
@@ -216,7 +217,7 @@
         }
 
         function drawGamepoint() {
-            document.querySelector('#count').innerHTML = `スコア: ${count}回`
+            document.querySelector('#count').innerHTML = `残り: ${15-count}回`
         }
     }
 </script>
