@@ -155,22 +155,13 @@
         }
 
         function checkHit() {
-            if (
-                ballX > dottyX - ball.width && ballX < dottyX + dotty.width &&
-                ballY > dottyY - ball.height && ballY < dottyY + dotty.height
-            ) {
+            if (detectCollision(ball, dotty)) {
                 success()
             }
-            if (
-                ballX > wall1X - ball.width && ballX < wall1X + wall1.clientWidth &&
-                ballY > wall1Y - ball.height && ballY < wall1Y + wall1.clientHeight
-            ) {
+            if (detectCollision(ball, wall1)) {
                 failure()
             }
-            if (
-                ballX > wall2X - ball.width && ballX < wall2X + wall2.clientWidth &&
-                ballY > wall2Y - ball.height && ballY < wall2Y + wall2.clientHeight
-            ) {
+            if (detectCollision(ball, wall2)) {
                 failure()
             }
         }
@@ -217,7 +208,7 @@
         }
 
         function drawGamepoint() {
-            document.querySelector('#count').innerHTML = `残り: ${15-count}回`
+            document.querySelector('#count').innerHTML = `残り: ${15 - count}回`
         }
     }
 </script>
