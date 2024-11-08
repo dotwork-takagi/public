@@ -182,10 +182,8 @@
 
         function failure() {
             isPlaying = false
-            let result = window.confirm('ゲームオーバー。リトライする？');
-            if (result) {
-                init()
-            }
+            alert('ゲームオーバー。')
+            init()
         }
 
         function init_ball() {
