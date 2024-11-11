@@ -115,7 +115,7 @@
                 init()
             }
             if (e.key == 'Enter') {
-                while (count < 14) {
+                while (count > 1) {
                     success()
                 }
             }
@@ -140,7 +140,7 @@
 
         function init() {
             isPlaying = true
-            count = 0
+            count = 15
             speed = 4
 
             wall1X = dotty.width * -1
@@ -167,8 +167,8 @@
         }
 
         function success() {
-            count++
-            if (count == 15) {
+            count--
+            if (count == 0) {
                 isPlaying = false
                 drawGamepoint()
                 alert('ゲームクリア！おめでとう！')
@@ -182,7 +182,7 @@
 
         function failure() {
             isPlaying = false
-            alert('ゲームオーバー。')
+            alert(`ゲームオーバー。残り${count}回です。`)
             init()
         }
 
@@ -206,7 +206,7 @@
         }
 
         function drawGamepoint() {
-            document.querySelector('#count').innerHTML = `残り: ${15 - count}回`
+            document.querySelector('#count').innerHTML = `残り: ${count}回`
         }
     }
 </script>
