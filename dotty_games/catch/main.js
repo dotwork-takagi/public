@@ -13,6 +13,8 @@ window.onload = function () {
     const maxX = body.clientWidth - fruit.width
     const maxY = body.clientHeight
 
+    init()
+
     function init() {
         count = 0
         speed = 4
