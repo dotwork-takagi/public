@@ -79,27 +79,24 @@ function main() { // メインの処理を書く関数
         dotty.style.top = maxY - dotty.height - dotty.height / 4 // ドッティの画像のY座標をマウスに追従
         dotty.style.display = 'block' // ドッティの画像を表示する
     }
-
-    function getRandomInt(min, max) { // ランダムな整数を生成
-        min = Math.ceil(min)
-        max = Math.floor(max)
-        return Math.floor(Math.random() * (max - min + 1)) + min
-    }
-
-    function detectCollision(obj1, obj2) { // オブジェクトの衝突を判定
-        let obj1X = parseInt(obj1.style.left, 10) || 0
-        let obj1Y = parseInt(obj1.style.top, 10) || 0
-        let obj2X = parseInt(obj2.style.left, 10) || 0
-        let obj2Y = parseInt(obj2.style.top, 10) || 0
-
-        if (
-            obj1X + obj1.clientWidth > obj2X &&
-            obj1X < obj2X + obj2.clientWidth &&
-            obj1Y + obj1.clientHeight > obj2Y &&
-            obj1Y < obj2Y + obj2.clientHeight
-        ) {
-            return true
-        }
-        return false
-    }
 }
+
+function getRandomInt(min, max) { // ランダムな整数を生成
+    return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function detectCollision(obj1, obj2) { // オブジェクトの衝突を判定
+    let obj1X = parseInt(obj1.style.left)
+    let obj1Y = parseInt(obj1.style.top)
+    let obj2X = parseInt(obj2.style.left)
+    let obj2Y = parseInt(obj2.style.top)
+
+    if (
+        obj1X + obj1.clientWidth > obj2X && obj1X < obj2X + obj2.clientWidth &&
+        obj1Y + obj1.clientHeight > obj2Y && obj1Y < obj2Y + obj2.clientHeight
+    ) {
+        return true
+    }
+    return false
+}
+
