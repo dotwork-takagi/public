@@ -11,6 +11,10 @@ function main() { // メインの処理を書く関数
     const maxX = document.body.clientWidth // 画面の横幅
     const maxY = document.body.clientHeight // 画面の縦幅
 
+    function drawScore() { // スコアを描画
+        document.getElementById('score').innerHTML = `スコア: ${score}回`
+    }
+
     init() // 状態を初期化する
 
     function init() { // 状態を初期化する関数
@@ -22,11 +26,7 @@ function main() { // メインの処理を書く関数
         drawScore() // スコアを描画
     }
 
-    function drawScore() { // スコアを描画
-        document.getElementById('score').innerHTML = `スコア: ${score}回`
-    }
-
-    setInterval(loop, 10) // 10msごとにloop関数を実行
+    setInterval(loop, 10) // 10ms毎にloop関数を実行
 
     function loop() { // ループの処理を書く関数
         if (isPlaying == true) { // プレイ中であれば
@@ -37,16 +37,14 @@ function main() { // メインの処理を書く関数
                 speed += 0.2 // スピードを0.2増やす 
                 fruit.style.left = getRandomInt(0, maxX) // フルーツの次のX座標を設定 
                 fruit.style.top = fruit.height * -1 // フルーツの次のY座標を設定
-
                 drawScore() // スコアを描画
             }
-
-            if (parseInt(fruit.style.top) > maxY) { // フルーツが下の画面外に移動したら
+    
+            if (parseInt(fruit.style.top) > maxY) { // フルーツが画面外の下に移動したら
                 isPlaying = false // プレイ中ではないように設定
                 alert(`ゲーム終了です。記録は${score}回でした。`) // メッセージを表示
             }
-
-            // スコアによってフルーツの種類を変える
+    
             if (score < 10) {
                 fruit.src = 'img/fruit/0.png'
             } else if (score < 20) {
