@@ -130,7 +130,7 @@
     document.body.onkeydown = (e) => {
         // alert(e.key)
         if (e.key == 'Enter') {
-            if ($('#romaji .left').innerHTML == $('#input').innerHTML) {
+            if ($('#romaji').textContent == $('#input').textContent) {
                 index++
                 updateTarget()
             }
