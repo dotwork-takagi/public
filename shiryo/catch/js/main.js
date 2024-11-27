@@ -13,6 +13,14 @@ function main() { // メインの処理を書く関数
 
     function drawScore() { // スコアを描画
         document.getElementById('score').innerHTML = `スコア: ${score}回`
+
+        // const key = 'catch_best'
+        // let best = localStorage.getItem(key) ?? count
+        // if (best <= count) {
+        //     best = count
+        //     localStorage.setItem(key, best)
+        // }
+        // document.querySelector('#best').innerHTML = `ベスト: ${best}回`
     }
 
     init() // 状態を初期化する

@@ -1,0 +1,10 @@
+body {
+    overflow: hidden; /* はみ出した部分を隠す */
+    user-select: none; /* 要素の選択を無効にする*/
+}
+
+img {
+    -webkit-user-drag: none; /* 画像の要素のドラッグを無効にする */
+    position: absolute; /* 画像の配置を絶対位置で設定 */
+    display: none; /* 画像を非表示 */
+}
