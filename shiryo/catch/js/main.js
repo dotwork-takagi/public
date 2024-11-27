@@ -82,7 +82,7 @@ function main() { // メインの処理を書く関数
 
     function moveDotty(e) {
         dotty.style.left = e.clientX - dotty.width / 2 // ドッティの画像のX座標をマウスに追従
-        dotty.style.top = maxY - dotty.height - dotty.height / 4 // ドッティの画像のY座標をマウスに追従
+        dotty.style.top = maxY - dotty.height - dotty.height / 4 // ドッティの画像のY座標を下の方に固定
         dotty.style.display = 'block' // ドッティの画像を表示する
     }
 }
