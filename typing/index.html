@@ -6,12 +6,19 @@
     <script src='js/Dollar.js'></script>
     <style>
         body {
+            user-select: none;
             display: flex;
         }
 
-        #container {
+        #setting {
             margin: auto;
             text-align: center;
+        }
+
+        #typing {
+            margin: auto;
+            text-align: center;
+            display: none;
         }
 
         #speed {
@@ -29,8 +36,15 @@
 </head>
 
 <body>
-    <div id="container">
+    <div id="setting">
         <h1>タイピング</h1>
+        <input type="radio" id="ken"><label for="ken">都道府県</label>
+        <br><br>
+        <button id="start">スタート</button>
+    </div>
+    <div id="typing">
+        <h1>タイピング</h1>
+        <div id="index"></div>
         <div id="miss">ミス: <span>0</span></div>
         <div id="speed"><span>0.00</span>打/秒</div>
         <div id="kanji"></div>
@@ -41,10 +55,7 @@
 </body>
 <script>
 
-    let index = 0
-    let miss = 0
-    let startTime = null
-    let endTime = null
+    let isPlaying, index, miss, startTime, endTime
 
     const hiraganaToRomaji1 = {
         'っ': 'xtu',
@@ -127,8 +138,33 @@
         "沖縄県": "おきなわけん"
     };
 
+    function init() {
+        isPlaying = false
+        index = 0
+        miss = 0
+        startTime = null
+        endTime = null
+        $('#setting').style.display = 'block'
+        $('#typing').style.display = 'none'
+    }
+
+    init()
+
+    $('#start').onclick = () => {
+        if (!isPlaying) {
+            if (document.querySelector('input[type="radio"]:checked') == null) {
+                alert('お題を選択してください')
+            } else {
+                isPlaying = true
+                updateTarget()
+                $('#setting').style.display = 'none'
+                $('#typing').style.display = 'block'
+            }
+        }
+    }
+
     document.body.onkeydown = (e) => {
-        // alert(e.key)
+        if (!isPlaying) { return }
         if (e.key == 'Enter') {
             if ($('#romaji').textContent == $('#input').textContent) {
                 index++
@@ -158,25 +194,30 @@
         updateStatus()
     }
 
-    updateTarget()
-
     function updateTarget() {
-        const dict = Object.entries(todoufuken)[index]
-        let kanji = dict[0]
-        let yomi = dict[1]
-        let romaji = yomi
-        for (const dict of Object.entries(hiraganaToRomaji1)) {
-            romaji = romaji.replaceAll(dict[0], dict[1])
+        const array = Object.entries(todoufuken)
+        if (array.length == index) {
+            alert('終了です！お疲れさまでした！')
+            init()
+        } else {
+            const dict = array[index]
+            let kanji = dict[0]
+            let yomi = dict[1]
+            let romaji = yomi
+            for (const dict of Object.entries(hiraganaToRomaji1)) {
+                romaji = romaji.replaceAll(dict[0], dict[1])
+            }
+            for (const dict of Object.entries(hiraganaToRomaji2)) {
+                romaji = romaji.replaceAll(dict[0], dict[1])
+            }
+            $('#index').html(`${index + 1}/${array.length}`)
+            $('#kanji').html(kanji)
+            $('#yomi').html(yomi)
+            $('#romaji .left').html('')
+            $('#romaji .right').html(romaji.replace(/xtu([kstnhmyrwgzdbp])/, '$1$1'))
+            $('#input').html('')
+            updateStatus()
         }
-        for (const dict of Object.entries(hiraganaToRomaji2)) {
-            romaji = romaji.replaceAll(dict[0], dict[1])
-        }
-        $('#kanji').html(kanji)
-        $('#yomi').html(yomi)
-        $('#romaji .left').html('')
-        $('#romaji .right').html(romaji.replace(/xtu([kstnhmyrwgzdbp])/, '$1$1'))
-        $('#input').html('')
-        updateStatus()
     }
 
     function updateStatus() {

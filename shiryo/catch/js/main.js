@@ -92,10 +92,10 @@ function getRandomInt(min, max) { // ランダムな整数を生成
 }
 
 function detectCollision(obj1, obj2) { // オブジェクトの衝突を判定
-    let obj1X = parseInt(obj1.style.left)
-    let obj1Y = parseInt(obj1.style.top)
-    let obj2X = parseInt(obj2.style.left)
-    let obj2Y = parseInt(obj2.style.top)
+    const obj1X = parseInt(obj1.style.left)
+    const obj1Y = parseInt(obj1.style.top)
+    const obj2X = parseInt(obj2.style.left)
+    const obj2Y = parseInt(obj2.style.top)
 
     if (
         obj1X + obj1.clientWidth > obj2X && obj1X < obj2X + obj2.clientWidth &&
