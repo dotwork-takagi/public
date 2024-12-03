@@ -44,6 +44,7 @@
     </div>
     <div id="typing">
         <h1>タイピング</h1>
+        <div id="time">00:00</div>
         <div id="index"></div>
         <div id="miss">ミス: <span>0</span></div>
         <div id="speed"><span>0.00</span>打/秒</div>
@@ -55,7 +56,7 @@
 </body>
 <script>
 
-    let isPlaying, index, miss, startTime, endTime
+    let isPlaying, index, miss, allStartTime, curStartTime, curEndTime
 
     const hiraganaToRomaji1 = {
         'っ': 'xtu',
@@ -142,19 +143,38 @@
         isPlaying = false
         index = 0
         miss = 0
-        startTime = null
-        endTime = null
+        allStartTime = null
+        curStartTime = null
+        curEndTime = null
         $('#setting').style.display = 'block'
         $('#typing').style.display = 'none'
     }
 
     init()
 
+    function step() {
+        if (allStartTime != null) {
+            const diffInMs = new Date() - allStartTime
+
+            const totalSeconds = Math.floor(diffInMs / 1000)
+            const minutes = Math.floor(totalSeconds / 60)
+            const seconds = totalSeconds % 60
+
+            const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+
+            $('#time').innerHTML = formattedTime
+        }
+        window.requestAnimationFrame(step)
+    }
+
+    window.requestAnimationFrame(step)
+
     $('#start').onclick = () => {
         if (!isPlaying) {
             if (document.querySelector('input[type="radio"]:checked') == null) {
                 alert('お題を選択してください')
             } else {
+                allStartTime = new Date()
                 isPlaying = true
                 updateTarget()
                 $('#setting').style.display = 'none'
@@ -183,10 +203,10 @@
 
         } else {
             if ($('#input').innerHTML == '') {
-                startTime = new Date()
-                endTime = startTime
+                curStartTime = new Date()
+                curEndTime = curStartTime
             } else {
-                endTime = new Date()
+                curEndTime = new Date()
             }
             $('#input').innerHTML += e.key
         }
@@ -223,7 +243,7 @@
     function updateStatus() {
         let speed
         if ($('#input').innerHTML.length > 1) {
-            const diffInMilliseconds = endTime - startTime
+            const diffInMilliseconds = curEndTime - curStartTime
             const diffInSeconds = diffInMilliseconds / 1000
             speed = ($('#input').innerHTML.length / diffInSeconds).toFixed(2)
         } else {
