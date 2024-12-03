@@ -46,7 +46,7 @@
         <h1>タイピング</h1>
         <div id="time">00:00</div>
         <div id="index"></div>
-        <div id="miss">ミス: <span>0</span></div>
+        <div><span id="miss">0</span> (<span id="seikaku">100</span>%)</div>
         <div id="speed"><span>0.00</span>打/秒</div>
         <div id="kanji"></div>
         <div id="yomi"></div>
@@ -56,7 +56,7 @@
 </body>
 <script>
 
-    let isPlaying, index, miss, allStartTime, curStartTime, curEndTime
+    let isPlaying, index, inputCount, missCount, allStartTime, curStartTime, curEndTime
 
     const hiraganaToRomaji1 = {
         'っ': 'xtu',
@@ -142,7 +142,8 @@
     function init() {
         isPlaying = false
         index = 0
-        miss = 0
+        inputCount = 0
+        missCount = 0
         allStartTime = null
         curStartTime = null
         curEndTime = null
@@ -192,11 +193,13 @@
             }
         }
         else if (e.key == 'Backspace') {
-            $('#input').innerHTML = $('#input').innerHTML.slice(0, -1)
-            miss++
+            if ($('#input').innerHTML != '') {
+                $('#input').innerHTML = $('#input').innerHTML.slice(0, -1)
+                missCount++
+            }
         }
         else if (e.key == 'Escape') {
-            miss += $('#input').innerHTML.length
+            missCount += $('#input').innerHTML.length
             $('#input').innerHTML = ''
         }
         else if (e.key.length != 1) {
@@ -209,6 +212,7 @@
                 curEndTime = new Date()
             }
             $('#input').innerHTML += e.key
+            inputCount++
         }
         updateRomajiColor()
         updateStatus()
@@ -251,7 +255,10 @@
         }
         $('#speed span').innerHTML = speed
 
-        $('#miss span').innerHTML = miss
+        $('#miss').innerHTML = missCount
+        if(inputCount != 0) {
+            $('#seikaku').innerHTML = 100 - Math.trunc(missCount / inputCount * 100)
+        }
     }
 
     function updateRomajiColor() {
