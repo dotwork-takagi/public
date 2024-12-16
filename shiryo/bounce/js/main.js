@@ -1,5 +1,5 @@
 function main() { // メインの処理を行う関数
-    const dotty = document.getElementById('dotty') // ドッティの画像を定数に参照
+    const dotty = document.getElementById('dotty') // ドッティの画像を参照
 
     let isPlaying = null // プレイ中かどうか
     let level = 0 // 現在のレベル
@@ -29,14 +29,14 @@ function main() { // メインの処理を行う関数
 
     function move() { // ドッティーを動かす処理
         if (isPlaying) { // プレイ中であれば
-            x += dx
-            y += dy
-            z += dz
-            if (x < 0 || x > maxX) {
-                dx *= -1
+            x += dx // xをdxだけ変化させる
+            y += dy // yをdyだけ変化させる
+            z += dz // zをdzだけ変化させる
+            if (x < 0 || x > maxX) { // xがスクリーンの外に出たら
+                dx *= -1 // dxを反転する
             }
-            if (y < 0 || y > maxY) {
-                dy *= -1
+            if (y < 0 || y > maxY) { // yがスクリーンの外に出たら
+                dy *= -1 // dyを反転する
             }
             dotty.style.left = x // ドッティのX座標を設定
             dotty.style.top = y // ドッティのY座標を設定
@@ -45,18 +45,18 @@ function main() { // メインの処理を行う関数
         }
     }
 
-    document.body.onmousedown = () => {
-        if (isPlaying == null) {
-            isPlaying = true
-            dotty.style.display = 'block'
+    document.body.onmousedown = () => { // 画面がクリックされた時の処理
+        if (isPlaying == null) { // プレイ前であれば
+            isPlaying = true // プレイ中にする
+            dotty.style.display = 'block' // ドッティの画像を表示する
             move()
-        } else if (isPlaying) {
-            isPlaying = false
-            alert('ミスしたのでゲーム終了です！')
+        } else if (isPlaying) { // プレイ中であれば
+            isPlaying = false // プレイ後にする
+            alert('ミスしたのでゲーム終了です！') // メッセージを表示する
         }
     }
 
-    dotty.onmousedown = (e) => {
+    dotty.onmousedown = (e) => { // ドッティがクリックされた時の処理
         if (isPlaying) { // プレイ中であれば
             const acceleration = 1.05 // 加速させる割合
             dx = dx * acceleration // X座標の変化量を増やす
