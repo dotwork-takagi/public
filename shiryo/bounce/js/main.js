@@ -41,17 +41,8 @@ function main() { // メインの処理を行う関数
             dotty.style.left = x // ドッティのX座標を設定
             dotty.style.top = y // ドッティのY座標を設定
             dotty.style.transform = `rotate(${z}deg)` // ドッティの回転を設定
-            requestAnimationFrame(move)
+            requestAnimationFrame(move) // 次のフレームでmove関数を呼び出す
         }
-    }
-
-    function success() { // クリック成功した時
-        const acceleration = 1.05 // 加速させる割合
-        dx = dx * acceleration 
-        dy = dy * acceleration
-        level += 1
-        drawGamepoint() // gamepointを描画する
-        SetBgcolorTimer('#d1ffa3') // 背景色を薄い緑にしてから白に戻す
     }
 
     document.body.onmousedown = () => {
@@ -62,13 +53,17 @@ function main() { // メインの処理を行う関数
         } else if (isPlaying) {
             isPlaying = false
             alert('ミスしたのでゲーム終了です！')
-            // SetBgcolor('#ffa3a3') // 背景色を薄い赤にする
         }
     }
 
     dotty.onmousedown = (e) => {
         if (isPlaying) { // プレイ中であれば
-            success() // クリック成功時の処理
+            const acceleration = 1.05 // 加速させる割合
+            dx = dx * acceleration // X座標の変化量を増やす
+            dy = dy * acceleration // Y座標の変化量を増やす
+            level += 1
+            drawGamepoint() // gamepointを描画する
+            SetBgcolorTimer('#d1ffa3') // 背景色を薄い緑にしてから白に戻す
         }
         e.stopPropagation() // 親要素にイベントを伝搬しない
     }
