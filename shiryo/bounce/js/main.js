@@ -1,4 +1,4 @@
-function main() { // メインの処理
+function main() { // メインの処理を行う関数
     const dotty = document.getElementById('dotty') // ドッティの画像を定数に参照
 
     let isPlaying = null // プレイ中かどうか
@@ -21,11 +21,11 @@ function main() { // メインの処理
         }, 250)
     }
 
-    function drawGamepoint() { // gamepointを描画する
+    function drawGamepoint() { // gamepointを描画する関数
         document.getElementById('level').innerHTML = `レベル: ${level}回` // レベルを描画する
     }
 
-    drawGamepoint()
+    drawGamepoint() // gamepointを描画する
 
     function move() { // ドッティーを動かす処理
         if (isPlaying) { // プレイ中であれば
