@@ -1,44 +1,34 @@
-window.onload = function () {
+function main() { // メインの処理
+    const dotty = document.getElementById('dotty') // ドッティの画像を定数に参照
 
-    let currentLevel = 0
-    let isPlaying = null
+    let isPlaying = null // プレイ中かどうか
+    let level = 0 // 現在のレベル
 
-    const body = document.body
-    const img = document.querySelector('img')
+    let maxX = document.body.clientWidth - dotty.width // 画面の最大横幅
+    let maxY = document.body.clientHeight - dotty.height // 画面の最大縦幅
 
-    let maxX = body.clientWidth - img.width
-    let maxY = body.clientHeight - img.height
+    let x = 0 // 現在のドッティのX座標
+    let y = 0 // 現在のドッティのY座標
+    let z = 0 // 現在のドッティの回転
+    let dx = 5 // 1フレームで変化するドッティのX座標
+    let dy = 5 // 1フレームで変化するドッティのY座標
+    let dz = 2.5 // 1フレームで変化するドッティの回転
 
-    let x = 0
-    let y = 0
-    let z = 0
-    let dx = 5
-    let dy = 5
-    let dz = 2.5
+    function SetBgcolorTimer(color) { // 背景色を一時的に変える関数
+        document.body.style.backgroundColor = color // 背景色をcolorにする
+        window.setTimeout(function () { // 2.5秒後に
+            document.body.style.backgroundColor = 'white' // 背景色を白に戻す
+        }, 250)
+    }
+
+    function drawGamepoint() { // gamepointを描画する
+        document.getElementById('level').innerHTML = `レベル: ${level}回` // レベルを描画する
+    }
 
     drawGamepoint()
 
-    body.onmousedown = () => {
-        if (isPlaying == null) {
-            isPlaying = true
-            img.style.display = 'block'
-            move()
-        } else if (isPlaying) {
-            isPlaying = false
-            alert('ミスしたのでゲーム終了です！')
-            // SetBgcolor('#ffa3a3') // 背景色を薄い赤にする
-        }
-    }
-
-    img.onmousedown = (e) => {
-        if (isPlaying) {
-            success() // クリック成功
-        }
-        e.stopPropagation()
-    }
-
     function move() { // ドッティーを動かす処理
-        if (isPlaying) {
+        if (isPlaying) { // プレイ中であれば
             x += dx
             y += dy
             z += dz
@@ -48,30 +38,40 @@ window.onload = function () {
             if (y < 0 || y > maxY) {
                 dy *= -1
             }
-            img.style.left = x
-            img.style.top = y
-            img.style.transform = `rotate(${z}deg)`
+            dotty.style.left = x // ドッティのX座標を設定
+            dotty.style.top = y // ドッティのY座標を設定
+            dotty.style.transform = `rotate(${z}deg)` // ドッティの回転を設定
             requestAnimationFrame(move)
         }
     }
 
     function success() { // クリック成功した時
-        const acceleration = 1.05 // 加速
-        dx = dx * acceleration
+        const acceleration = 1.05 // 加速させる割合
+        dx = dx * acceleration 
         dy = dy * acceleration
-        currentLevel += 1
-        drawGamepoint()
-        SetBgcolorTimer('#d1ffa3') // 背景色を薄い緑にする
+        level += 1
+        drawGamepoint() // gamepointを描画する
+        SetBgcolorTimer('#d1ffa3') // 背景色を薄い緑にしてから白に戻す
     }
 
-    function drawGamepoint() { // gamepointを描画する
-        document.querySelector('#current-level').innerHTML = `スコア: ${currentLevel}回`
+    document.body.onmousedown = () => {
+        if (isPlaying == null) {
+            isPlaying = true
+            dotty.style.display = 'block'
+            move()
+        } else if (isPlaying) {
+            isPlaying = false
+            alert('ミスしたのでゲーム終了です！')
+            // SetBgcolor('#ffa3a3') // 背景色を薄い赤にする
+        }
+    }
+
+    dotty.onmousedown = (e) => {
+        if (isPlaying) { // プレイ中であれば
+            success() // クリック成功時の処理
+        }
+        e.stopPropagation() // 親要素にイベントを伝搬しない
     }
 }
 
-function SetBgcolorTimer(color) { // 背景色を変える
-    document.body.style.backgroundColor = color
-    window.setTimeout(function () {
-        document.body.style.backgroundColor = 'white'
-    }, 250)
-}
+window.onload = main // windowがロードされた時にmain関数を実行する
