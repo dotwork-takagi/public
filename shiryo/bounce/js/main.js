@@ -1,8 +1,10 @@
+window.onload = main // windowがロードされた時にmain関数を実行する
+
 function main() { // メインの処理を行う関数
     const dotty = document.getElementById('dotty') // ドッティの画像を参照
 
     let isPlaying = null // プレイ中かどうか
-    let level = 0 // 現在のレベル
+    let score = 0 // 現在のスコア
 
     let maxX = document.body.clientWidth - dotty.width // 画面の最大横幅
     let maxY = document.body.clientHeight - dotty.height // 画面の最大縦幅
@@ -21,13 +23,13 @@ function main() { // メインの処理を行う関数
         }, 250)
     }
 
-    function drawGamepoint() { // gamepointを描画する関数
-        document.getElementById('level').innerHTML = `レベル: ${level}回` // レベルを描画する
-    }
-
     drawGamepoint() // gamepointを描画する
 
-    function move() { // ドッティーを動かす処理
+    function drawGamepoint() { // gamepointを描画する関数
+        document.getElementById('score').innerHTML = `スコア: ${score}回` // スコアを描画する
+    }
+
+    function moveDotty() { // ドッティを動かす関数
         if (isPlaying) { // プレイ中であれば
             x += dx // xをdxだけ変化させる
             y += dy // yをdyだけ変化させる
@@ -41,7 +43,7 @@ function main() { // メインの処理を行う関数
             dotty.style.left = x // ドッティのX座標を設定
             dotty.style.top = y // ドッティのY座標を設定
             dotty.style.transform = `rotate(${z}deg)` // ドッティの回転を設定
-            requestAnimationFrame(move) // 次のフレームでmove関数を呼び出す
+            requestAnimationFrame(moveDotty) // 次のフレームでmoveDotty関数を呼び出す
         }
     }
 
@@ -49,7 +51,7 @@ function main() { // メインの処理を行う関数
         if (isPlaying == null) { // プレイ前であれば
             isPlaying = true // プレイ中にする
             dotty.style.display = 'block' // ドッティの画像を表示する
-            move()
+            moveDotty() // ドッティを動かす
         } else if (isPlaying) { // プレイ中であれば
             isPlaying = false // プレイ後にする
             alert('ミスしたのでゲーム終了です！') // メッセージを表示する
@@ -61,12 +63,10 @@ function main() { // メインの処理を行う関数
             const acceleration = 1.05 // 加速させる割合
             dx = dx * acceleration // X座標の変化量を増やす
             dy = dy * acceleration // Y座標の変化量を増やす
-            level += 1
+            score += 1 // スコアを1増やす
             drawGamepoint() // gamepointを描画する
             SetBgcolorTimer('#d1ffa3') // 背景色を薄い緑にしてから白に戻す
         }
         e.stopPropagation() // 親要素にイベントを伝搬しない
     }
 }
-
-window.onload = main // windowがロードされた時にmain関数を実行する
